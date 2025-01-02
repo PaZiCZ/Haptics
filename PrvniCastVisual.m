@@ -4,7 +4,7 @@ clear all
 close all
 
 %script identifier
-si = 'Prvni Cast Experimentu';
+si = 'The first part / randomly generated target positions';
 
 % Specify folder
 tester='00';
@@ -23,7 +23,7 @@ experiment_no='00';
 % mkdir(cestaslozka);
 
 haptic = 1;
-visual = 1;
+visual = 0;
 
 %Settings - Arduino - joy
 if exist('s','var') == 0
@@ -84,8 +84,8 @@ count=0;
     position(i)= axis(joystick, 2);
     z = position(i) - 0.25;
     w = position(i) + 0.25;
-    disp('Bìhem experimentu prosím pøíliš netlaète na výsuvný èlen!')
-    disp('Pro zaèátek prvního úkolu pohnìte joystickem dopøedu a zpìt')
+    disp('Do not push to a sliding element during the experiment!')
+    disp('To begin the experiment move with the joystick forward and back')
     
     % Begin while loop that enables desired pause between subsequent trials
     while (position(i) > z ) && (position(i) < w )&& (count < countmax)
@@ -121,10 +121,10 @@ count=0;
         % Actual position
         AP = axis(joystick, 2);  
         
-        % Desired position - náhodnì vygenerovaná
+        % Desired (target) position - randomly generated
         
         DP = (p1max-p1min).*rand(1) + p1min;  
-        while DP+toleranceX>AP && DP-toleranceX<AP
+        while DP+2*toleranceX>AP && DP-2*toleranceX<AP
             DP = (p1max-p1min).*rand(1) + p1min;
         end
 
@@ -199,16 +199,16 @@ count=0;
                         
                elseif delta(i,no) < -toleranceX
                     signal = false;
-                    if delta(i,no) < -max_difX %vyzaduje se velky pohyb vzad
+                    if delta(i,no) < -max_difX % required significant move back
                         poloha_A = vnejsi_limit;
-                    else %vyzaduje se pomerny pohyb vzad
+                    else % required slight and proporcional move back
                         poloha_A = neutral+(neutral-vnejsi_limit)/(max_difX)*(delta(i,no));
                     end
                elseif delta(i,no) > toleranceX
                     signal = false;
-                    if delta(i,no)>max_difX %vyzaduje se velky pohyb vpred
+                    if delta(i,no)>max_difX %required significant move forward
                         poloha_A = vnitrni_limit;
-                    else  %vyzaduje se pomerny pohyb vpred
+                    else  % required slight and proporcional move forward
                        poloha_A = neutral+(vnitrni_limit-neutral)/(max_difX)*(delta(i,no));
                     end
                                    
