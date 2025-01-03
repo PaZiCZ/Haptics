@@ -12,16 +12,16 @@ experiment_no='00';
 
 % folder="tester"+tester+"no"+experiment_no;
 testcase="te"+tester+"no"+experiment_no; 
-testpath='C:\Users\zikmund\Downloads\Thesis255678\measurement\'+testcase;
-% 
-if isfolder(testpath)
-     disp('Measurement exists!.');
-     %Code will not run
-else
+saveFolder = fullfile('C:\Users\zikmund\Downloads\Thesis255678\measurement', testcase);
 
-path=sprintf('C:\Users\zikmund\Downloads\Thesis255678\measurement');
-newpath=strcat(path,testcase);
-mkdir(newpath)
+% Ensure the folder exists; create it if it doesn't
+if ~isfolder(saveFolder)
+    mkdir(saveFolder);
+    disp(['Created folder: ', saveFolder]);
+else
+    disp(['Folder already exists: ', saveFolder]);
+    disp('DO NOT CONTINUE');
+end
 
 haptic = 1;
 visual = 0;
@@ -245,11 +245,7 @@ count=0;
 
         % Time of each desired position
         DPT(no) = toc(timing(no));
-        
-%         if LearningTime == 1
-%            LT(no) = NaN;
-%         end
-        
+              
         no = no + 1;
         
     end
@@ -282,11 +278,10 @@ count=0;
 ExperimentTiming = toc(ET) ./ 60;
 fprintf('Time need to comlete the experiment: %g min \n', ExperimentTiming)
 AA = sprintf('Experiment time [min]');
-warning( 'off', 'MATLAB:xlswrite:AddSheet' );
-% xlswrite(jmenosouboru,{AA},'ET (min)', 'A1');
-% xlswrite(jmenosouboru, ExperimentTiming,'ET (min)', 'B1');
 
 clear s
+clear s1
+clear s2
 
 % Reaction speed
 no=no-1;
@@ -299,53 +294,42 @@ end
 
 EAPDP = permute(errorAPDP, [2 1 3]);
 
-% Data saving in excel file
-filename = testcase+"part1.xlsx";    
-    warning( 'off', 'MATLAB:xlswrite:AddSheet');
+% Define datasets and corresponding headers
+datasets = {
+    'resultsa.csv', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
+    'resultsb.csv', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
+    'resultsc.csv', {'errorAPDP (V)'}, errorAPDP(:,:);
+    'resultsd.csv', {'DevAE2 (V)'}, DevAE2(:)
+};
+
+% Loop through datasets and save each to a CSV file
+for i = 1:size(datasets, 1)
+    % Extract details
+    csvFileName = datasets{i, 1};
+    headers = datasets{i, 2};
+    data = datasets{i, 3};
     
-    xltitlerange = sprintf('A%g');
-    row = sprintf('trial n° %g');
-        
-        xltitlerange = sprintf('A%g');
-        row = sprintf('trial n° %g');
-        xlswrite(filename, {row}, 'doba (s)', xltitlerange);
-        xlswrite(filename, {row}, 'DPTs (s)', xltitlerange);
-        xlswrite(filename, {row}, 'path (V)', xltitlerange);
-        xlswrite(filename, {row}, 'RTs (s)', xltitlerange);        
-        xlswrite(filename, {row}, 'AE2 (V)', xltitlerange);
-        xlswrite(filename, {row}, 'DevAE2 (V)', xltitlerange);
-%         xlswrite(jmenosouboru, {row}, 'HTs (s)', xltitlerange);
-        xlswrite(filename, {row}, 'MEDP (V)', xltitlerange);
-        xlswrite(filename, {row}, 'errorAPDP (V)', xltitlerange);
-        xlswrite(filename, {row}, 'outValue (-)', xltitlerange);
-        xlswrite(filename, {row}, 'kniplValue (-)', xltitlerange);
-        xlswrite(filename, {row}, 'xt (t)', xltitlerange);
-        xlr = sprintf('B%g');
+    % Ensure headers match the number of columns in data
+    numCols = size(data, 2);
+    if numel(headers) ~= numCols
+        % Adjust headers dynamically if necessary
+        headers = arrayfun(@(j) sprintf('Column_%d', j), 1:numCols, 'UniformOutput', false);
+        disp(['Warning: Adjusted headers for ', csvFileName, ' to match data dimensions.']);
+    end
 
-        %if haptic ==1
-        xlswrite(filename, doba(:,:), 'doba (s)', xlr);
-        %end
+    % Define full path for the CSV file
+    csvFile = fullfile(saveFolder, csvFileName);
+    
+    % Write headers and data
+    writecell([headers; num2cell(data)], csvFile);
+    
+    % Confirm save
+    disp(['Saved to: ', csvFile]);
+end
 
-        xlswrite(filename, DPT(:), 'DPTs (s)', xlr);
-        xlswrite(filename, path(:), 'path (V)', xlr);
-        xlswrite(filename, RT(:), 'RTs (s)', xlr);
-         xlswrite(filename, AE2(:), 'AE2 (V)', xlr);
-        xlswrite(filename, DevAE2(:), 'DevAE2 (V)', xlr);
-%         xlswrite(jmenosouboru, HTs(:,:), 'HTs (s)', xlr);
-        xlswrite(filename, MEDP(:), 'MEDP (V)', xlr);
-        
-        %if haptic ==1
-        xlswrite(filename, EAPDP(:,:), 'errorAPDP (V)', xlr);
-        xlswrite(filename, outValue(:), 'outValue (-)', xlr);
-        xlswrite(filename, kniplValue(:), 'kniplValue (-)', xlr);
-        xlswrite(filename, xt(:), 'xt (t)', xlr);
-        %end
 
-movefile(filename,newpath);   %move file with all basic data in subject folder
+% Confirm the results were saved
+disp(['Results saved to: ', csvFile]);
 
 disp('Experiment finished.');
 % end
-clear s1
-clear s2
-
-end
