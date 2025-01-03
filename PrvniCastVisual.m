@@ -1,6 +1,6 @@
 %Script reads joystick position in X and Y and guides a human to randomly generated position
 
-clear all
+clear
 close all
 
 %script identifier
@@ -10,17 +10,18 @@ si = 'The first part / randomly generated target positions';
 tester='00';
 experiment_no='00';
 
-% slozka="tester"+tester+"no"+experiment_no;
-% jmenosouboru="te"+tester+"no"+experiment_no; %+".xlsx";
+% folder="tester"+tester+"no"+experiment_no;
+testcase="te"+tester+"no"+experiment_no; 
+testpath='C:\Users\zikmund\Downloads\Thesis255678\measurement\'+testcase;
 % 
-% % if isfolder(slozka)
-% %     disp('Toto mereni jiz existuje! Opravte cislo testera a experimentu a program znovu spustte.');
-% %     %Uz nic, program naprazdno proleti
-% % else
-% 
-% cesta=sprintf('F:\Zeta\Joystick\Learning\DruhyJoy');
-% cestaslozka=strcat(cesta,slozka);
-% mkdir(cestaslozka);
+if isfolder(testpath)
+     disp('Measurement exists!.');
+     %Code will not run
+else
+
+path=sprintf('C:\Users\zikmund\Downloads\Thesis255678\measurement');
+newpath=strcat(path,testcase);
+mkdir(newpath)
 
 haptic = 1;
 visual = 0;
@@ -31,7 +32,7 @@ if exist('s','var') == 0
 end
 
     servo1Pin = 'D6';     % èíslo pinu ovládání servo motoru 1 - L
-    servo2Pin = 'D9';     % èíslo pinu ovládání servo motoru 2 - P
+    servo2Pin = 'D5';     % èíslo pinu ovládání servo motoru 2 - P
     if exist('s1','var') == 0
       s1 = servo(s, servo1Pin);
     end
@@ -43,20 +44,20 @@ end
 %Settings
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
 vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.59; %poloha kdyz joystick nepozaduje manevr, default = 0.57
+neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.57
 % max_delta = 0.2; %maximalni diferencialni vychylka pro naklon joysticku na stranu, default = 0.1
 
 toleranceX = 0.05; %rozdil nad kterym joystick uz signalizuje, default = 0.025
 max_difX = 0.5; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
 
-korekce=-0.013; %0.027;
+korekce=0.07; %0.027;
 
 %POZOR - vnitrni_limit, vnejsi_limit, neutral, max_delta, min_ext, min_tilt
 %jsou bezrozmerove polohy serv-a
 %ALE - toleranceX, toleranceY, max_difX, max_difY
 %jsou bezrozmerove polohy ale joysticku
 T0 = 3; %
-Maxno = 20;    % Number of DP 
+Maxno = 3;    % Number of DP 
 
 % rozsah joysticku - bylo by dobré to ovìøit nìjakou kalibrací
 p1min = -1;
@@ -274,15 +275,9 @@ count=0;
     hold off;
     
     
-        poloha_A = neutral;
-        poloha_S = 0;
-            
-        poloha_L = poloha_A-poloha_S;
-        poloha_P = poloha_A+poloha_S;
-
-        
-        writePosition(s1, poloha_L);
-        writePosition(s2, poloha_P);
+       
+        writePosition(s1, neutral+korekce);
+        writePosition(s2, neutral-korekce);
         
 ExperimentTiming = toc(ET) ./ 60;
 fprintf('Time need to comlete the experiment: %g min \n', ExperimentTiming)
@@ -305,7 +300,7 @@ end
 EAPDP = permute(errorAPDP, [2 1 3]);
 
 % Data saving in excel file
-jmenosouboru = "test.xlsx";    
+filename = testcase+"part1.xlsx";    
     warning( 'off', 'MATLAB:xlswrite:AddSheet');
     
     xltitlerange = sprintf('A%g');
@@ -313,40 +308,44 @@ jmenosouboru = "test.xlsx";
         
         xltitlerange = sprintf('A%g');
         row = sprintf('trial n° %g');
-        xlswrite(jmenosouboru, {row}, 'doba (s)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'DPTs (s)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'path (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'RTs (s)', xltitlerange);        
-        xlswrite(jmenosouboru, {row}, 'AE2 (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'DevAE2 (V)', xltitlerange);
+        xlswrite(filename, {row}, 'doba (s)', xltitlerange);
+        xlswrite(filename, {row}, 'DPTs (s)', xltitlerange);
+        xlswrite(filename, {row}, 'path (V)', xltitlerange);
+        xlswrite(filename, {row}, 'RTs (s)', xltitlerange);        
+        xlswrite(filename, {row}, 'AE2 (V)', xltitlerange);
+        xlswrite(filename, {row}, 'DevAE2 (V)', xltitlerange);
 %         xlswrite(jmenosouboru, {row}, 'HTs (s)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'MEDP (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'errorAPDP (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'outValue (-)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'kniplValue (-)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'xt (t)', xltitlerange);
+        xlswrite(filename, {row}, 'MEDP (V)', xltitlerange);
+        xlswrite(filename, {row}, 'errorAPDP (V)', xltitlerange);
+        xlswrite(filename, {row}, 'outValue (-)', xltitlerange);
+        xlswrite(filename, {row}, 'kniplValue (-)', xltitlerange);
+        xlswrite(filename, {row}, 'xt (t)', xltitlerange);
         xlr = sprintf('B%g');
 
         %if haptic ==1
-        xlswrite(jmenosouboru, doba(:,:), 'doba (s)', xlr);
+        xlswrite(filename, doba(:,:), 'doba (s)', xlr);
         %end
 
-        xlswrite(jmenosouboru, DPT(:), 'DPTs (s)', xlr);
-        xlswrite(jmenosouboru, path(:), 'path (V)', xlr);
-        xlswrite(jmenosouboru, RT(:), 'RTs (s)', xlr);
-         xlswrite(jmenosouboru, AE2(:), 'AE2 (V)', xlr);
-        xlswrite(jmenosouboru, DevAE2(:), 'DevAE2 (V)', xlr);
+        xlswrite(filename, DPT(:), 'DPTs (s)', xlr);
+        xlswrite(filename, path(:), 'path (V)', xlr);
+        xlswrite(filename, RT(:), 'RTs (s)', xlr);
+         xlswrite(filename, AE2(:), 'AE2 (V)', xlr);
+        xlswrite(filename, DevAE2(:), 'DevAE2 (V)', xlr);
 %         xlswrite(jmenosouboru, HTs(:,:), 'HTs (s)', xlr);
-        xlswrite(jmenosouboru, MEDP(:), 'MEDP (V)', xlr);
+        xlswrite(filename, MEDP(:), 'MEDP (V)', xlr);
         
         %if haptic ==1
-        xlswrite(jmenosouboru, EAPDP(:,:), 'errorAPDP (V)', xlr);
-        xlswrite(jmenosouboru, outValue(:), 'outValue (-)', xlr);
-        xlswrite(jmenosouboru, kniplValue(:), 'kniplValue (-)', xlr);
-        xlswrite(jmenosouboru, xt(:), 'xt (t)', xlr);
+        xlswrite(filename, EAPDP(:,:), 'errorAPDP (V)', xlr);
+        xlswrite(filename, outValue(:), 'outValue (-)', xlr);
+        xlswrite(filename, kniplValue(:), 'kniplValue (-)', xlr);
+        xlswrite(filename, xt(:), 'xt (t)', xlr);
         %end
 
-% movefile(jmenosouboru,slozka);   %move file with all basic data in subject folder
+movefile(filename,newpath);   %move file with all basic data in subject folder
 
 disp('Experiment finished.');
 % end
+clear s1
+clear s2
+
+end
