@@ -1,30 +1,41 @@
-% navadi do plynule se menici cilove pozice 
+%Script reads joystick position in X and Y and guides a human to predefined smoothly changing position
 
 clear all
 close all
 
 %script identifier
-si = 'Druha cast experimentu plynule';
+si = 'The second part, continuouslz changing position';
 
 % Specify folder
 tester='08';
 experiment_no='02';
-varianta='09';
+variant='09';
+
 haptic = 0;
 visual = 1;
 
-Test = load("var"+varianta+".mat");
-slozka="tester"+tester+"no"+experiment_no;
-jmenosouboru="te"+tester+"no"+experiment_no+"var"+varianta;
+% folder="tester"+tester+"no"+experiment_no;
+Test = load("var"+variant+".mat");
+testcase="te"+tester+"no"+experiment_no; 
+saveFolder = fullfile('C:\Users\zikmund\Downloads\Thesis255678\measurement', testcase);
+filename2="te"+tester+"no"+experiment_no+"var"+variant;
+
+% Ensure the folder exists; create it if it doesn't
+if isfolder(saveFolder)
     
-% cesta=sprintf('D:\Learning_test\Experiment');
-% cestaslozka=strcat(cesta,slozka);
-% mkdir(cestaslozka);
+    disp(['The folder exists from Task 1: ', saveFolder]);
+else
+    disp(['Folder created: ', saveFolder]);
+    mkdir(saveFolder);
+    disp('Task 1 is not saved!!!!');
+end
+
+
 f=fullfile('C:\Users\zikmund\Downloads\Thesis(255678)\Thesis(255678)\measurement',slozka);
-% checkname=jmenosouboru+".xlsx";
-if isfile(fullfile(f,jmenosouboru+".xlsx"))
-    disp('Toto mereni jiz existuje! Opravte cislo testera a experimentu a program znovu spustte.');
-    %Uz nic, program naprazdno proleti
+
+if isfile(fullfile(f,filename2+".csv"))
+    disp('The measurement exists! Correct experiment identifiers and run it again.');
+    %The code will not run and ends
 else
 
  %Settings - Arduino - joy
@@ -33,8 +44,8 @@ if exist('s','var') == 0
 end
 
 if haptic == 1
-    servo1Pin = 'D6';     % èíslo pinu ovládání servo motoru 1 - L
-    servo2Pin = 'D9';     % èíslo pinu ovládání servo motoru 2 - P
+    servo1Pin = 'D6';     % pin number for left servo - 1 
+    servo2Pin = 'D5';     % pin number for right servo - 2
     if exist('s1','var') == 0
       s1 = servo(s, servo1Pin);
     end
@@ -46,7 +57,7 @@ end
 
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
 vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.545; %poloha kdyz joystick nepozaduje manevr, default = 0.57
+neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.57
 
 toleranceX = 0.05; %rozdil nad kterym joystick uz signalizuje, default = 0.025
 max_difX = 0.5; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
@@ -59,7 +70,7 @@ maxT=poloha(radky,2);
 
 
 if haptic == 1
-    %nastaveni vychozi polohy serv
+   % initial servo position
     writePosition(s1, neutral+korekce);
     writePosition(s2, neutral-korekce);
 end
@@ -81,9 +92,9 @@ count=0;
 position(i)= axis(joystick, 2);
 z = position(i) - 0.25;
 w = position(i) + 0.25;   
-disp('Bìhem experimentu prosím pøíliš netlaète na výsuvný èlen!')
-disp('Pro zaèátek druhého úkolu pohnìte joystickem dopøedu a zpìt')
-
+    disp('Do not push to a sliding element during the experiment!')
+    disp('To begin the experiment move with the joystick forward and back')
+  
 % Begin while loop that enables desired pause between subsequent trials
 while (position(i) > z ) && (position(i) < w )&& (count < countmax)
     position(i) = axis(joystick, 2);
@@ -123,7 +134,7 @@ pause(1);
         % Actual position
         AP(o) = axis(joystick, 2);  
         
-        % Desired position - náhodnì vygenerovaná
+        % Desired (target) position - interpolation from prerecorded file
         DP(o) = interp1(poloha(:,2),poloha(:,1),t(o));  
 
         if visual == 1
@@ -162,9 +173,6 @@ pause(1);
             normdoba(1:n)=doba(1:n)/sum(doba(1:n));
             AE2 = sum(normdoba(1:n).*abs(errorAPDP(1:n)));
             DevAE2 = sqrt(var(errorAPDP(1:n),normdoba(1:n)));
-%                AE = mean(abs(errorAPDP));
-%             AE = mean(doba.*abs(errorAPDP))/sum(doba);
-%             DevAE2 = sqrt((1./(n - 1)).* sum((errorAPDP-AE2).^2));
             
              
         
@@ -183,12 +191,8 @@ pause(1);
     plot(t,DP-toleranceX,'g','LineWidth',1);
     title('Actual position & Desired position');
     legend('Actual position', 'Desired position','+- tolerance', 'Location', 'southeast');
-    % Save the plot
-%     File_1 = sprintf('testtestply%d.fig');
-%     saveas(figure(1), File_1);
-%     movefile testtestply* D:\Learning_test\Experiment\tester1 
-%     File_1 = sprintf('%s.fig',jmenosouboru(1:strfind(jmenosouboru,'.')-1));
-File_1=jmenosouboru+".fig";
+   
+    File_1=jmenosouboru+".fig";
     saveas(figure(1), File_1);
     movefile(File_1,slozka) 
     hold off;
@@ -241,7 +245,6 @@ warning( 'off', 'MATLAB:xlswrite:AddSheet' );
  
 
 movefile(jmenosouboru,slozka);
-% movefile testtestply* D:\Learning_test\Experiment\tester1;   %move file with all basic data in subject folder
 
 disp('Experiment finished.');
 clear
