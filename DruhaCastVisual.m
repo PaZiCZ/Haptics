@@ -191,8 +191,8 @@ pause(1);
     plot(t,DP,'r','LineWidth',1);
     plot(t,DP+toleranceX,'g','LineWidth',1);
     plot(t,DP-toleranceX,'g','LineWidth',1);
-    title('Actual position & Desired position');
-    legend('Actual position', 'Desired position','+- tolerance', 'Location', 'southeast');
+    title('Actual position & Target position');
+    legend('Actual position', 'Target position','+- tolerance', 'Location', 'southeast');
    
     File_1=jmenosouboru+".fig";
     saveas(figure(1), File_1);
@@ -216,38 +216,43 @@ AA = sprintf('Experiment time [min]');
 clear s
 EAPDP = permute(errorAPDP, [2 1 3]);
 
-jmenosouboru = jmenosouboru+".xlsx";
-% xlswrite(jmenosouboru,{AA},'ET (min)', 'A1');
-% xlswrite(jmenosouboru, ExperimentTiming,'ET (min)', 'B1');
-warning( 'off', 'MATLAB:xlswrite:AddSheet' );
+% Define datasets and corresponding headers
+datasets = {
+    'resultsT2a.csv', {'t (s)', 'DP (-)','AP (-)','path (V)'}, [t(:), DP(:), AP(:), path(:) ];
+    'resultsT2b.csv', {'AE2 (V)','DevAE2 (V)', 'MEDP (V)'}, [AE2(:), DevAE2(:), MEDP(:)]
+};
 
-% Data saving in excel file
+% Loop through datasets and save each to a CSV file
+for i = 1:size(datasets, 1)
+    % Extract details
+    csvFileName = datasets{i, 1};
+    headers = datasets{i, 2};
+    data = datasets{i, 3};
     
-    warning( 'off', 'MATLAB:xlswrite:AddSheet');
-    
-        xltitlerange = sprintf('A%g');
-        row = sprintf('trial n° %g');        
-        xlswrite(jmenosouboru, {row}, 'path (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'AP (-)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'DP (-)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 't (s)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'AE2 (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'DevAE2 (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'MEDP (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'errorAPDP (V)', xltitlerange);
-        xlr = sprintf('B%g');       
-        xlswrite(jmenosouboru, path(:), 'path (V)', xlr);
-        xlswrite(jmenosouboru, AP(:), 'AP (-)', xlr);
-        xlswrite(jmenosouboru, DP(:), 'DP (-)', xlr);
-        xlswrite(jmenosouboru, t(:), 't (s)', xlr);
-        xlswrite(jmenosouboru, AE2(:), 'AE2 (V)', xlr);
-        xlswrite(jmenosouboru, DevAE2(:), 'DevAE2 (V)', xlr);        
-        xlswrite(jmenosouboru, MEDP(:), 'MEDP (V)', xlr);       
-        xlswrite(jmenosouboru, EAPDP(:,:), 'errorAPDP (V)', xlr);
- 
+    % Ensure headers match the number of columns in data
+    numCols = size(data, 2);
+    if numel(headers) ~= numCols
+        % Adjust headers dynamically if necessary
+        headers = arrayfun(@(j) sprintf('Column_%d', j), 1:numCols, 'UniformOutput', false);
+        disp(['Warning: Adjusted headers for ', csvFileName, ' to match data dimensions.']);
+    end
 
-movefile(jmenosouboru,slozka);
+    % Define full path for the CSV file
+    csvFile = fullfile(saveFolder, csvFileName);
+    
+    % Write headers and data
+    writecell([headers; num2cell(data)], csvFile);
+    
+    % Confirm save
+    disp(['Saved to: ', csvFile]);
+end
+
+
+% Confirm the results were saved
+disp(['Results saved to: ', csvFile]);
 
 disp('Experiment finished.');
+
+
 clear
 end
