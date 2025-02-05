@@ -7,14 +7,15 @@ close all
 si = 'The second part, continuouslz changing position';
 
 % Specify folder
-tester='08';
-experiment_no='02';
-variant='09';
+tester='01';
+experiment_no='06';
+variant='10';
 
-haptic = 0;
-visual = 1;
+haptic = 1;
+visual = 0;
 
 % folder="tester"+tester+"no"+experiment_no;
+addpath('C:\Users\zikmund\Downloads\Thesis255678\GitHub\var01-12')
 Test = load("var"+variant+".mat");
 testcase="te"+tester+"no"+experiment_no; 
 saveFolder = fullfile('C:\Users\zikmund\Downloads\Thesis255678\measurement', testcase);
@@ -30,12 +31,9 @@ else
     disp('Task 1 is not saved!!!!');
 end
 
-
-f=fullfile('C:\Users\zikmund\Downloads\Thesis(255678)\Thesis(255678)\measurement',slozka);
-
-if isfile(fullfile(f,filename2+".csv"))
-    disp('The measurement exists! Correct experiment identifiers and run it again.');
-    %The code will not run and ends
+    fileNameresults = "resultsT2a.csv";
+if isfile(fullfile(saveFolder, fileNameresults))
+    disp('The file exists in the folder.');
 else
 
  %Settings - Arduino - joy
@@ -194,9 +192,9 @@ pause(1);
     title('Actual position & Target position');
     legend('Actual position', 'Target position','+- tolerance', 'Location', 'southeast');
    
-    File_1=jmenosouboru+".fig";
+    File_1=filename2+".fig";
     saveas(figure(1), File_1);
-    movefile(File_1,slozka) 
+    movefile(File_1,saveFolder) 
     hold off;
     %close all;
     
