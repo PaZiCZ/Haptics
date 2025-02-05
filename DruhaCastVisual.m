@@ -162,6 +162,8 @@ pause(1);
            
            writePosition(s1, poloha_A+korekce);
            writePosition(s2, poloha_A-korekce);
+           else
+                    pause(0.02);
         end
 
             o = o + 1;
