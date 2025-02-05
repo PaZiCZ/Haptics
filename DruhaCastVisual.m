@@ -10,7 +10,7 @@ si = 'Druha cast experimentu plynule';
 tester='08';
 experiment_no='02';
 varianta='09';
-haptic = 1;
+haptic = 0;
 visual = 1;
 
 Test = load("var"+varianta+".mat");

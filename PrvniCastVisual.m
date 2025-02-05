@@ -7,8 +7,8 @@ close all
 si = 'The first part / randomly generated target positions';
 
 % Specify folder
-tester='00';
-experiment_no='00';
+tester='01';
+experiment_no='02';
 
 % folder="tester"+tester+"no"+experiment_no;
 testcase="te"+tester+"no"+experiment_no; 
@@ -23,8 +23,8 @@ else
     disp('DO NOT CONTINUE');
 end
 
-haptic = 1;
-visual = 0;
+haptic = 0;
+visual = 1;
 
 %Settings - Arduino - joy
 if haptic == 1
