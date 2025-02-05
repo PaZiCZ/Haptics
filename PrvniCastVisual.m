@@ -8,10 +8,10 @@ si = 'The first part / randomly generated target positions';
 
 % Specify folder
 tester='01';
-experiment_no='02';
+experiment_no='06';
 
-haptic = 0;
-visual = 1;
+haptic = 1;
+visual = 0;
 
 % folder="tester"+tester+"no"+experiment_no;
 testcase="te"+tester+"no"+experiment_no; 
@@ -267,11 +267,12 @@ count=0;
     plot(xt,outValue,'r','LineWidth',1);
     plot(xt,outValue+toleranceX,'g','LineWidth',1);
     plot(xt,outValue-toleranceX,'g','LineWidth',1);
-    title('Actual position & Desired position');
-    legend('Actual position', 'Desired position','+- tolerance', 'Location', 'southeast');
+    title('Actual position & Target position');
+    legend('Actual position', 'Target position','+- tolerance', 'Location', 'southeast');
 
-    File_1 = "fig.fig";
-
+    File_1=testcase+".fig";
+    saveas(figure(1), File_1);
+    movefile(File_1,saveFolder) 
     hold off;
     
     
