@@ -1,18 +1,19 @@
 %Script reads joystick position in X and Y and guides a human to predefined smoothly changing position
 
-clear all
+clear
 close all
 
 %script identifier
 si = 'The second part, continuouslz changing position';
 
-% Specify folder
-tester='01';
-experiment_no='06';
-variant='10';
+run('specification.m');
 
-haptic = 1;
-visual = 0;
+% variables from specification file
+disp(['Tester: ', tester]);
+disp(['Experiment Number: ', experiment_no]);
+disp(['Haptic: ', num2str(haptic)]);
+disp(['Visual: ', num2str(visual)]);
+disp(['Variant: ', variant]);
 
 % folder="tester"+tester+"no"+experiment_no;
 addpath('C:\Users\zikmund\Downloads\Thesis255678\GitHub\var01-12')

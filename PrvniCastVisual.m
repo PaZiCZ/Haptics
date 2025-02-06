@@ -6,12 +6,13 @@ close all
 %script identifier
 si = 'The first part / randomly generated target positions';
 
-% Specify folder
-tester='01';
-experiment_no='06';
+run('specification.m');
 
-haptic = 1;
-visual = 0;
+% variables from specification file
+disp(['Tester: ', tester]);
+disp(['Experiment Number: ', experiment_no]);
+disp(['Haptic: ', num2str(haptic)]);
+disp(['Visual: ', num2str(visual)]);
 
 % folder="tester"+tester+"no"+experiment_no;
 testcase="te"+tester+"no"+experiment_no; 
