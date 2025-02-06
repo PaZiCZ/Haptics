@@ -43,24 +43,9 @@ if haptic == 1
     end
 
 end
-%Settings
-vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
-vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.57
-% max_delta = 0.2; %maximalni diferencialni vychylka pro naklon joysticku na stranu, default = 0.1
-
-korekce=0.07; %0.027;
-
-%POZOR - vnitrni_limit, vnejsi_limit, neutral, max_delta, min_ext, min_tilt
-%jsou bezrozmerove polohy serv-a
-%ALE - toleranceX, toleranceY, max_difX, max_difY
-%jsou bezrozmerove polohy ale joysticku
-
-max_difX = 0.5; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
-toleranceX = 0.05; %rozdil nad kterym joystick uz signalizuje, default = 0.025
 
 T0 = 3; %
-Maxno = 3;    % Number of DP 
+Maxno = 6;    % Number of DP 
 
 % rozsah joysticku - bylo by dobré to ovìøit nìjakou kalibrací
 p1min = -1;
@@ -203,14 +188,14 @@ count=0;
                         poloha_A = neutral+(neutral-vnejsi_limit)/(max_difX)*(delta(i,no));
                     end
                         
-               elseif delta(i,no) < -toleranceX
+               elseif delta(i,no) < -threshold
                     signal = false;
                     if delta(i,no) < -max_difX % required significant move back
                         poloha_A = vnejsi_limit;
                     else % required slight and proporcional move back
                         poloha_A = neutral+(neutral-vnejsi_limit)/(max_difX)*(delta(i,no));
                     end
-               elseif delta(i,no) > toleranceX
+               elseif delta(i,no) > threshold
                     signal = false;
                     if delta(i,no)>max_difX %required significant move forward
                         poloha_A = vnitrni_limit;

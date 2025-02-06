@@ -52,16 +52,6 @@ if haptic == 1
       s2 = servo(s, servo2Pin);
     end
 end
-%Settings
-
-vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
-vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.57
-
-toleranceX = 0.05; %rozdil nad kterym joystick uz signalizuje, default = 0.025
-max_difX = 0.5; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
-korekce=0.027;
-
 
 poloha=Test.poloha;
 [radky,h]=size(poloha);
