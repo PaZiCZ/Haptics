@@ -307,7 +307,7 @@ EAPDP = permute(errorAPDP, [2 1 3]);
 datasets = {
     'resultsa.csv', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
     'resultsb.csv', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
-    'resultsc.csv', {'errorAPDP (V)'}, errorAPDP(:,:);
+    'resultsc.csv', arrayfun(@(j) sprintf('errorAPDP_%d (V)', j), 1:size(errorAPDP, 2), 'UniformOutput', false), errorAPDP;
     'resultsd.csv', {'DevAE2 (V)'}, DevAE2(:)
 };
 
