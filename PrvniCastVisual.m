@@ -6,7 +6,7 @@ close all
 %script identifier
 si = 'The first part / randomly generated target positions';
 
-run('specification.m');
+run('spec.m');
 
 % variables from specification file
 disp(['Tester: ', tester]);

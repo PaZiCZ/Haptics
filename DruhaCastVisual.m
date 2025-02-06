@@ -6,7 +6,7 @@ close all
 %script identifier
 si = 'The second part, continuouslz changing position';
 
-run('specification.m');
+run('spec.m');
 
 % variables from specification file
 disp(['Tester: ', tester]);
