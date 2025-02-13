@@ -16,7 +16,7 @@ disp(['Visual: ', num2str(visual)]);
 
 % folder="tester"+tester+"no"+experiment_no;
 testcase="te"+tester+"no"+experiment_no; 
-saveFolder = fullfile('C:\Users\zikmund\Downloads\Thesis255678\measurement', testcase);
+saveFolder = fullfile('E:\Thesis255678\measurement', testcase);
 
 % Ensure the folder exists; create it if it doesn't
 if ~isfolder(saveFolder)
@@ -27,25 +27,8 @@ else
     disp('DO NOT CONTINUE');
 end
 
-%Settings - Arduino - joy
-if haptic == 1
-    if exist('s','var') == 0
-        s = arduino('COM4','Leonardo');
-    end
-
-    servo1Pin = 'D6';     % pin number for left servo - 1 
-    servo2Pin = 'D5';     % pin number for right servo - 2
-    if exist('s1','var') == 0
-        s1 = servo(s, servo1Pin);
-    end
-    if exist('s2','var') == 0
-      s2 = servo(s, servo2Pin);
-    end
-
-end
-
 T0 = 3; %
-Maxno = 6;    % Number of DP 
+
 
 % rozsah joysticku - bylo by dobré to ovìøit nìjakou kalibrací
 p1min = -1;

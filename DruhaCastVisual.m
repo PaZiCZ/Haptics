@@ -16,10 +16,10 @@ disp(['Visual: ', num2str(visual)]);
 disp(['Variant: ', variant]);
 
 % folder="tester"+tester+"no"+experiment_no;
-addpath('C:\Users\zikmund\Downloads\Thesis255678\GitHub\var01-12')
+addpath('E:\Thesis255678\var01-12')
 Test = load("var"+variant+".mat");
 testcase="te"+tester+"no"+experiment_no; 
-saveFolder = fullfile('C:\Users\zikmund\Downloads\Thesis255678\measurement', testcase);
+saveFolder = fullfile('E:\Thesis255678\measurement', testcase);
 filename2="te"+tester+"no"+experiment_no+"var"+variant;
 
 % Ensure the folder exists; create it if it doesn't
@@ -38,20 +38,20 @@ if isfile(fullfile(saveFolder, fileNameresults))
 else
 
  %Settings - Arduino - joy
-if exist('s','var') == 0
-    s = arduino('COM4','Leonardo');
-end
-
-if haptic == 1
-    servo1Pin = 'D6';     % pin number for left servo - 1 
-    servo2Pin = 'D5';     % pin number for right servo - 2
-    if exist('s1','var') == 0
-      s1 = servo(s, servo1Pin);
-    end
-    if exist('s2','var') == 0
-      s2 = servo(s, servo2Pin);
-    end
-end
+% if exist('s','var') == 0
+%     s = arduino('COM4','Leonardo');
+% end
+% 
+% if haptic == 1
+%     servo1Pin = 'D6';     % pin number for left servo - 1 
+%     servo2Pin = 'D5';     % pin number for right servo - 2
+%     if exist('s1','var') == 0
+%       s1 = servo(s, servo1Pin);
+%     end
+%     if exist('s2','var') == 0
+%       s2 = servo(s, servo2Pin);
+%     end
+% end
 
 poloha=Test.poloha;
 [radky,h]=size(poloha);
