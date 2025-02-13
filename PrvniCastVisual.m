@@ -1,70 +1,75 @@
 %Script reads joystick position in X and Y and guides a human to randomly generated position
 
-clear all
+clear
 close all
 
 %script identifier
 si = 'The first part / randomly generated target positions';
 
 % Specify folder
-tester='00';
-experiment_no='00';
-
-% slozka="tester"+tester+"no"+experiment_no;
-% jmenosouboru="te"+tester+"no"+experiment_no; %+".xlsx";
-% 
-% % if isfolder(slozka)
-% %     disp('Toto mereni jiz existuje! Opravte cislo testera a experimentu a program znovu spustte.');
-% %     %Uz nic, program naprazdno proleti
-% % else
-% 
-% cesta=sprintf('F:\Zeta\Joystick\Learning\DruhyJoy');
-% cestaslozka=strcat(cesta,slozka);
-% mkdir(cestaslozka);
+tester='01';
+experiment_no='06';
 
 haptic = 1;
 visual = 0;
 
-%Settings - Arduino - joy
-if exist('s','var') == 0
-    s = arduino('COM4','Leonardo');
+% folder="tester"+tester+"no"+experiment_no;
+testcase="te"+tester+"no"+experiment_no; 
+saveFolder = fullfile('C:\Users\zikmund\Downloads\Thesis255678\measurement', testcase);
+
+% Ensure the folder exists; create it if it doesn't
+if ~isfolder(saveFolder)
+    mkdir(saveFolder);
+    disp(['Created folder: ', saveFolder]);
+else
+    disp(['Folder already exists: ', saveFolder]);
+    disp('DO NOT CONTINUE');
 end
 
-    servo1Pin = 'D6';     % èíslo pinu ovládání servo motoru 1 - L
-    servo2Pin = 'D9';     % èíslo pinu ovládání servo motoru 2 - P
+%Settings - Arduino - joy
+if haptic == 1
+    if exist('s','var') == 0
+        s = arduino('COM4','Leonardo');
+    end
+
+    servo1Pin = 'D6';     % pin number for left servo - 1 
+    servo2Pin = 'D5';     % pin number for right servo - 2
     if exist('s1','var') == 0
-      s1 = servo(s, servo1Pin);
+        s1 = servo(s, servo1Pin);
     end
     if exist('s2','var') == 0
       s2 = servo(s, servo2Pin);
     end
 
-
+end
 %Settings
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
 vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.59; %poloha kdyz joystick nepozaduje manevr, default = 0.57
+neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.57
 % max_delta = 0.2; %maximalni diferencialni vychylka pro naklon joysticku na stranu, default = 0.1
 
-toleranceX = 0.05; %rozdil nad kterym joystick uz signalizuje, default = 0.025
-max_difX = 0.5; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
-
-korekce=-0.013; %0.027;
+korekce=0.07; %0.027;
 
 %POZOR - vnitrni_limit, vnejsi_limit, neutral, max_delta, min_ext, min_tilt
 %jsou bezrozmerove polohy serv-a
 %ALE - toleranceX, toleranceY, max_difX, max_difY
 %jsou bezrozmerove polohy ale joysticku
+
+max_difX = 0.5; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
+toleranceX = 0.05; %rozdil nad kterym joystick uz signalizuje, default = 0.025
+
 T0 = 3; %
-Maxno = 20;    % Number of DP 
+Maxno = 3;    % Number of DP 
 
 % rozsah joysticku - bylo by dobré to ovìøit nìjakou kalibrací
 p1min = -1;
 p1max = 1;
 
-    %nastaveni vychozi polohy serv
+if haptic == 1
+    % initial servo position
     writePosition(s1, neutral+korekce);
     writePosition(s2, neutral-korekce);
+end
 
 % Definuje ID snimaneho joysticku/pedalu, obycejne se pedaly hlasi na ID 1
 ID = 1;
@@ -218,8 +223,10 @@ count=0;
                 poloha_A1=poloha_A+korekce;
                 poloha_A2=poloha_A-korekce;
                 if haptic == 1
-                writePosition(s1, poloha_A1);
-                writePosition(s2, poloha_A2);
+                    writePosition(s1, poloha_A1);
+                    writePosition(s2, poloha_A2);
+                else
+                    pause(0.02);
                 end
                 o = o + 1;
                 
@@ -244,11 +251,7 @@ count=0;
 
         % Time of each desired position
         DPT(no) = toc(timing(no));
-        
-%         if LearningTime == 1
-%            LT(no) = NaN;
-%         end
-        
+              
         no = no + 1;
         
     end
@@ -264,34 +267,29 @@ count=0;
     plot(xt,outValue,'r','LineWidth',1);
     plot(xt,outValue+toleranceX,'g','LineWidth',1);
     plot(xt,outValue-toleranceX,'g','LineWidth',1);
-    title('Actual position & Desired position');
-    legend('Actual position', 'Desired position','+- tolerance', 'Location', 'southeast');
-    % Save the plot
-%     File_1 = sprintf('%s.fig',jmenosouboru(1:strfind(jmenosouboru,'.')-1));
-    File_1 = "fig.fig";
-%     saveas(figure(1), File_1);
-%     movefile(File_1,slozka) 
+    title('Actual position & Target position');
+    legend('Actual position', 'Target position','+- tolerance', 'Location', 'southeast');
+
+    File_1=testcase+".fig";
+    saveas(figure(1), File_1);
+    movefile(File_1,saveFolder) 
     hold off;
     
     
-        poloha_A = neutral;
-        poloha_S = 0;
-            
-        poloha_L = poloha_A-poloha_S;
-        poloha_P = poloha_A+poloha_S;
+if haptic == 1       
+        writePosition(s1, neutral+korekce);
+        writePosition(s2, neutral-korekce);
+end
 
-        
-        writePosition(s1, poloha_L);
-        writePosition(s2, poloha_P);
-        
 ExperimentTiming = toc(ET) ./ 60;
 fprintf('Time need to comlete the experiment: %g min \n', ExperimentTiming)
 AA = sprintf('Experiment time [min]');
-warning( 'off', 'MATLAB:xlswrite:AddSheet' );
-% xlswrite(jmenosouboru,{AA},'ET (min)', 'A1');
-% xlswrite(jmenosouboru, ExperimentTiming,'ET (min)', 'B1');
 
-clear s
+if haptic == 1
+    clear s
+    clear s1
+    clear s2
+end
 
 % Reaction speed
 no=no-1;
@@ -304,49 +302,42 @@ end
 
 EAPDP = permute(errorAPDP, [2 1 3]);
 
-% Data saving in excel file
-jmenosouboru = "test.xlsx";    
-    warning( 'off', 'MATLAB:xlswrite:AddSheet');
+% Define datasets and corresponding headers
+datasets = {
+    'resultsa.csv', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
+    'resultsb.csv', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
+    'resultsc.csv', {'errorAPDP (V)'}, errorAPDP(:,:);
+    'resultsd.csv', {'DevAE2 (V)'}, DevAE2(:)
+};
+
+% Loop through datasets and save each to a CSV file
+for i = 1:size(datasets, 1)
+    % Extract details
+    csvFileName = datasets{i, 1};
+    headers = datasets{i, 2};
+    data = datasets{i, 3};
     
-    xltitlerange = sprintf('A%g');
-    row = sprintf('trial n° %g');
-        
-        xltitlerange = sprintf('A%g');
-        row = sprintf('trial n° %g');
-        xlswrite(jmenosouboru, {row}, 'doba (s)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'DPTs (s)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'path (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'RTs (s)', xltitlerange);        
-        xlswrite(jmenosouboru, {row}, 'AE2 (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'DevAE2 (V)', xltitlerange);
-%         xlswrite(jmenosouboru, {row}, 'HTs (s)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'MEDP (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'errorAPDP (V)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'outValue (-)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'kniplValue (-)', xltitlerange);
-        xlswrite(jmenosouboru, {row}, 'xt (t)', xltitlerange);
-        xlr = sprintf('B%g');
+    % Ensure headers match the number of columns in data
+    numCols = size(data, 2);
+    if numel(headers) ~= numCols
+        % Adjust headers dynamically if necessary
+        headers = arrayfun(@(j) sprintf('Column_%d', j), 1:numCols, 'UniformOutput', false);
+        disp(['Warning: Adjusted headers for ', csvFileName, ' to match data dimensions.']);
+    end
 
-        %if haptic ==1
-        xlswrite(jmenosouboru, doba(:,:), 'doba (s)', xlr);
-        %end
+    % Define full path for the CSV file
+    csvFile = fullfile(saveFolder, csvFileName);
+    
+    % Write headers and data
+    writecell([headers; num2cell(data)], csvFile);
+    
+    % Confirm save
+    disp(['Saved to: ', csvFile]);
+end
 
-        xlswrite(jmenosouboru, DPT(:), 'DPTs (s)', xlr);
-        xlswrite(jmenosouboru, path(:), 'path (V)', xlr);
-        xlswrite(jmenosouboru, RT(:), 'RTs (s)', xlr);
-         xlswrite(jmenosouboru, AE2(:), 'AE2 (V)', xlr);
-        xlswrite(jmenosouboru, DevAE2(:), 'DevAE2 (V)', xlr);
-%         xlswrite(jmenosouboru, HTs(:,:), 'HTs (s)', xlr);
-        xlswrite(jmenosouboru, MEDP(:), 'MEDP (V)', xlr);
-        
-        %if haptic ==1
-        xlswrite(jmenosouboru, EAPDP(:,:), 'errorAPDP (V)', xlr);
-        xlswrite(jmenosouboru, outValue(:), 'outValue (-)', xlr);
-        xlswrite(jmenosouboru, kniplValue(:), 'kniplValue (-)', xlr);
-        xlswrite(jmenosouboru, xt(:), 'xt (t)', xlr);
-        %end
 
-% movefile(jmenosouboru,slozka);   %move file with all basic data in subject folder
+% Confirm the results were saved
+disp(['Results saved to: ', csvFile]);
 
 disp('Experiment finished.');
 % end
