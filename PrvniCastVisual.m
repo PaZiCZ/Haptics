@@ -1,10 +1,9 @@
 %Script reads joystick position in X and Y and guides a human to randomly generated position
 
-clear
-close all
+function [done] = PrvniCastVisual(tester,experiment_no,haptic,visual,repetition, testcase, saveFolder)
 
 %script identifier
-si = 'The first part / randomly generated target positions';
+% si = 'Task 1 / randomly generated target positions';
 
 run('spec.m');
 
@@ -15,20 +14,20 @@ disp(['Haptic: ', num2str(haptic)]);
 disp(['Visual: ', num2str(visual)]);
 
 % folder="tester"+tester+"no"+experiment_no;
-testcase="te"+tester+"no"+experiment_no; 
-saveFolder = fullfile('E:\Thesis255678\measurement', testcase);
-
-% Ensure the folder exists; create it if it doesn't
-if ~isfolder(saveFolder)
-    mkdir(saveFolder);
-    disp(['Created folder: ', saveFolder]);
-else
-    disp(['Folder already exists: ', saveFolder]);
-    disp('DO NOT CONTINUE');
-end
+% testcase="te"+tester+"no"+experiment_no; 
+% saveFolder = fullfile('E:\Thesis255678\measurement', testcase);
+% 
+% % Ensure the folder exists; create it if it doesn't
+% if ~isfolder(saveFolder)
+%     mkdir(saveFolder);
+%     disp(['Created folder: ', saveFolder]);
+% else
+%     disp(['Folder already exists: ', saveFolder]);
+%     disp('DO NOT CONTINUE');
+% end
 
 T0 = 3; %
-
+done =0;
 
 % rozsah joysticku - bylo by dobré to ovìøit nìjakou kalibrací
 p1min = -1;
@@ -273,16 +272,16 @@ EAPDP = permute(errorAPDP, [2 1 3]);
 
 % Define datasets and corresponding headers
 datasets = {
-    'resultsa.csv', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
-    'resultsb.csv', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
-    'resultsc.csv', arrayfun(@(j) sprintf('errorAPDP_%d (V)', j), 1:size(errorAPDP, 2), 'UniformOutput', false), errorAPDP;
-    'resultsd.csv', {'DevAE2 (V)'}, DevAE2(:)
+    'resultsa', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
+    'resultsb', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
+    'resultsc', arrayfun(@(j) sprintf('errorAPDP_%d (V)', j), 1:size(errorAPDP, 2), 'UniformOutput', false), errorAPDP;
+    'resultsd', {'DevAE2 (V)'}, DevAE2(:)
 };
 
 % Loop through datasets and save each to a CSV file
 for i = 1:size(datasets, 1)
     % Extract details
-    csvFileName = datasets{i, 1};
+    csvFileName = datasets{i, 1}+ "_" + repetition + ".csv";
     headers = datasets{i, 2};
     data = datasets{i, 3};
     
@@ -308,5 +307,7 @@ end
 % Confirm the results were saved
 disp(['Results saved to: ', csvFile]);
 
-disp('Experiment finished.');
+disp('Task finished.');
+done =1;
 % end
+end

@@ -20,13 +20,13 @@ end
 %Settings
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
 vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.57
+neutral = 0.625; %poloha kdyz joystick nepozaduje manevr, default = 0.57
 % max_delta = 0.2; %maximalni diferencialni vychylka pro naklon joysticku na stranu, default = 0.1
 
 toleranceX = 0.05; %rozdil nad kterym joystick uz signalizuje, default = 0.025
 max_difX = 0.5; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
 
-korekce=0.07; %0.027;
+korekce=0.06; %0.027;
 
 %POZOR - vnitrni_limit, vnejsi_limit, neutral, max_delta, min_ext, min_tilt
 %jsou bezrozmerove polohy serv-a
@@ -34,11 +34,11 @@ korekce=0.07; %0.027;
 %jsou bezrozmerove polohy ale joysticku
 
     %nastaveni vychozi polohy serv
-    writePosition(s1, neutral+korekce);
-    writePosition(s2, neutral-korekce);
+    writePosition(s1, neutral+korekce)
+    writePosition(s2, neutral-korekce)
      % writePosition(s1, 0.69);
      % writePosition(s2, 0.53);
   % Pause
-    pause(1);
-    clear s1
-    clear s2
+    % pause(1);
+    % clear s1
+    % clear s2

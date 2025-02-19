@@ -1,10 +1,10 @@
 %Script reads joystick position in X and Y and guides a human to predefined smoothly changing position
-
-clear
-close all
+function [done] = DruhaCastVisual(tester,experiment_no,haptic,visual,repetition, testcase, variant, saveFolder)
+% clear
+% close all
 
 %script identifier
-si = 'The second part, continuouslz changing position';
+si = 'Task 2, continuously changing position';
 
 run('spec.m');
 
@@ -18,24 +18,25 @@ disp(['Variant: ', variant]);
 % folder="tester"+tester+"no"+experiment_no;
 addpath('E:\Thesis255678\var01-12')
 Test = load("var"+variant+".mat");
-testcase="te"+tester+"no"+experiment_no; 
+% testcase="te"+tester+"no"+experiment_no; 
 saveFolder = fullfile('E:\Thesis255678\measurement', testcase);
 filename2="te"+tester+"no"+experiment_no+"var"+variant;
 
-% Ensure the folder exists; create it if it doesn't
-if isfolder(saveFolder)
-    
-    disp(['The folder exists from Task 1: ', saveFolder]);
-else
-    disp(['Folder created: ', saveFolder]);
-    mkdir(saveFolder);
-    disp('Task 1 is not saved!!!!');
-end
-
-    fileNameresults = "resultsT2a.csv";
-if isfile(fullfile(saveFolder, fileNameresults))
-    disp('The file exists in the folder.');
-else
+% Ensure the folder exists; create it if it doesn't should be created in
+% the run experiment
+% % if isfolder(saveFolder)
+% % 
+% %     disp(['The folder exists from Task 1: ', saveFolder]);
+% % else
+% %     disp(['Folder created: ', saveFolder]);
+% %     mkdir(saveFolder);
+% %     disp('Task 1 is not saved!!!!');
+% % end
+% % 
+% %     fileNameresults = "resultsT2a.csv";
+% % if isfile(fullfile(saveFolder, fileNameresults))
+% %     disp('The file exists in the folder.');
+% % else
 
  %Settings - Arduino - joy
 % if exist('s','var') == 0
@@ -72,6 +73,7 @@ joystick=vrjoystick(ID);
 %chovani joystick:
 %osa pitch - X, osa2, kladna vychylka je pritazeni
 
+done = 0;
 ticstart = 1;
 ET = tic;
 i=1;
@@ -207,14 +209,14 @@ EAPDP = permute(errorAPDP, [2 1 3]);
 
 % Define datasets and corresponding headers
 datasets = {
-    'resultsT2a.csv', {'t (s)', 'DP (-)','AP (-)','path (V)'}, [t(:), DP(:), AP(:), path(:) ];
-    'resultsT2b.csv', {'AE2 (V)','DevAE2 (V)', 'MEDP (V)'}, [AE2(:), DevAE2(:), MEDP(:)]
+    'resultsT2a', {'t (s)', 'DP (-)','AP (-)','path (V)'}, [t(:), DP(:), AP(:), path(:) ];
+    'resultsT2b', {'AE2 (V)','DevAE2 (V)', 'MEDP (V)'}, [AE2(:), DevAE2(:), MEDP(:)]
 };
 
 % Loop through datasets and save each to a CSV file
 for i = 1:size(datasets, 1)
     % Extract details
-    csvFileName = datasets{i, 1};
+    csvFileName = datasets{i, 1}+ "_" + repetition+ ".csv";
     headers = datasets{i, 2};
     data = datasets{i, 3};
     
@@ -240,8 +242,9 @@ end
 % Confirm the results were saved
 disp(['Results saved to: ', csvFile]);
 
-disp('Experiment finished.');
+disp('Task finished.');
+done =1;
 
-
-clear
+% clear
 end
+

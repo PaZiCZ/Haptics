@@ -1,15 +1,18 @@
 % spec.m
-
 % Experiment specifications
-tester = '03';
-experiment_no = '08';
-variant = '11';
 
-Maxno = 10;    % Number of target position in Task 1 
+% tester = participant_no;
+% experiment_no = '08'; 
+% variant = '11';
+
+Maxno = 5;    % Number of target position in Task 1 
 
 % haptic and visual flags
-haptic = 1;
-visual = 0;
+% haptic = 1;
+% visual = 0;
+
+%Settings - Arduino - joy
+if haptic == 1
 
 % Sliding element setting 
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
@@ -27,8 +30,7 @@ max_difX = 1.0; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem u
 toleranceX = 0.1; % tolerance to define target position interval (only Task 1)
 threshold = 0.0;  %rozdil nad kterym joystick uz signalizuje, default = 0.025
 
-%Settings - Arduino - joy
-if haptic == 1
+
     if exist('s','var') == 0
         s = arduino('COM4','Leonardo');
     end
