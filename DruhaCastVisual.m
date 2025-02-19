@@ -185,7 +185,7 @@ pause(1);
     title('Actual position & Target position');
     legend('Actual position', 'Target position','+- tolerance', 'Location', 'southeast');
    
-    File_1=filename2+".fig";
+    File_1=filename2+"rep"+repetition+".fig";
     saveas(figure(1), File_1);
     movefile(File_1,saveFolder) 
     hold off;
