@@ -53,11 +53,27 @@ haptic = {haptic1, haptic2, haptic3};
 visual = {visual1, visual2, visual3};
 variant = {variant1, variant2, variant3};
 
+% Initialize workload matrix with zeros (assuming 3 repetitions)
+workload = zeros(1, length(haptic));
+
 for i = 1:length(haptic)
     
     PrvniCastVisual(tester, experiment_no, haptic{i}, visual{i}, i, testcase, saveFolder);
     DruhaCastVisual(tester, experiment_no, haptic{i}, visual{i}, i, testcase, variant{i}, saveFolder);
+        workload(i) = input(sprintf('Please enter a number for workload (Repetition %d): ', i));
 end
+
+% Create a table with headers
+repetitions = 1:length(haptic); % Column headers (1,2,3,...)
+T = array2table(workload, 'VariableNames', strcat("Repetition_", string(repetitions)));
+
+% Define CSV file name
+csvFileName = fullfile(saveFolder, 'workload.csv');
+
+% Save the table to CSV
+writetable(T, csvFileName);
+
+disp(['Workload matrix saved to ', csvFileName]);
 
 % Optionally, save results or generate reports after the experiment
 disp('Experiment completed.');
