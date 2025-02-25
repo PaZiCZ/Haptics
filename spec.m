@@ -22,14 +22,9 @@ neutral = 0.625; %poloha kdyz joystick nepozaduje manevr, default = 0.57
 
 korekce=0.06; %0.027;
 
-%POZOR - vnitrni_limit, vnejsi_limit, neutral, max_delta, min_ext, min_tilt
-%jsou bezrozmerove polohy serv-a
-%ALE - toleranceX, toleranceY, max_difX, max_difY
-%jsou bezrozmerove polohy ale joysticku
+max_difX = 1.0; % difference of the actual and target positions when sliding element reach maximum deflection, default = 0.2
 
-max_difX = 1.0; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
-
-threshold = 0.0;  %rozdil nad kterym joystick uz signalizuje, default = 0.025
+threshold = 0.0;  %threshold of the actual and target positions distance where sliding element start to signalize, default = 0.025
 
 
     if exist('s','var') == 0
