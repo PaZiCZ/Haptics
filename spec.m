@@ -6,6 +6,7 @@
 % variant = '11';
 
 Maxno = 5;    % Number of target position in Task 1 
+toleranceX = 0.1; % tolerance to define target position interval (only Task 1)
 
 % haptic and visual flags
 % haptic = 1;
@@ -27,7 +28,7 @@ korekce=0.06; %0.027;
 %jsou bezrozmerove polohy ale joysticku
 
 max_difX = 1.0; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
-toleranceX = 0.1; % tolerance to define target position interval (only Task 1)
+
 threshold = 0.0;  %rozdil nad kterym joystick uz signalizuje, default = 0.025
 
 
