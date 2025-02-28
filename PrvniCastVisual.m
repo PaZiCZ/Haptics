@@ -145,10 +145,10 @@ count=0;
                 
                 if (delta(i,no) >= -toleranceX) && (delta(i,no) <= toleranceX)
     
-                    if signal == false
-                           holding = tic;
-                    end
-                    signal = true;
+                    % if signal == false
+                    %        holding = tic;
+                    % end
+                    % signal = true;
                     
                     if (m == 1) % first time reach
                         % Reaction time needed for movement from CP to DP
@@ -170,15 +170,15 @@ count=0;
                         poloha_A = neutral+(neutral-vnejsi_limit)/(max_difX)*(delta(i,no));
                     end
                         
-               elseif delta(i,no) < -threshold
-                    signal = false;
+               elseif delta(i,no) < 0
+                    % signal = false;
                     if delta(i,no) < -max_difX % required significant move back
                         poloha_A = vnejsi_limit;
                     else % required slight and proporcional move back
                         poloha_A = neutral+(neutral-vnejsi_limit)/(max_difX)*(delta(i,no));
                     end
-               elseif delta(i,no) > threshold
-                    signal = false;
+                else
+                    % signal = false;
                     if delta(i,no)>max_difX %required significant move forward
                         poloha_A = vnitrni_limit;
                     else  % required slight and proporcional move forward
@@ -303,7 +303,7 @@ for i = 1:size(datasets, 1)
     disp(['Saved to: ', csvFile]);
 end
 
-
+lvwrite(0)
 % Confirm the results were saved
 disp(['Results saved to: ', csvFile]);
 

@@ -17,7 +17,7 @@ disp(['Variant: ', variant]);
 
 % folder="tester"+tester+"no"+experiment_no;
 addpath('E:\Thesis255678\var01-12')
-Test = load("var"+variant+".mat");
+Test = load("var"+variant+".mat"); 
 % testcase="te"+tester+"no"+experiment_no; 
 saveFolder = fullfile('E:\Thesis255678\measurement', testcase);
 filename2="te"+tester+"no"+experiment_no+"var"+variant;
@@ -238,7 +238,7 @@ for i = 1:size(datasets, 1)
     disp(['Saved to: ', csvFile]);
 end
 
-
+lvwrite(0)
 % Confirm the results were saved
 disp(['Results saved to: ', csvFile]);
 

@@ -3,9 +3,14 @@
 % This file runs the experiment for a specific tester (participant) and experiment_no (session).
 % It reads settings for that tester/experiment_no from the settings_table.csv file.
 
+% during the experiment, participant should listen to white noise:
+% https://www.youtube.com/watch?v=8fVnY3Q_iW8 
+% it is necessary because servos and sliding element movement can be heard
+
+
 % Define tester and experiment_no (participant and session number)
-tester = 1;        % Set the tester number (participant, e.g., 1)
-experiment_no = 1; % Set the experiment number (session number, e.g., 2)
+tester = 7;        % Set the tester number (participant, e.g., 1) (7 for short T2)
+experiment_no = 3; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
 
 testcase="te"+tester+"no"+experiment_no; 
 

@@ -24,7 +24,7 @@ korekce=0.06; %0.027;
 
 max_difX = 1.0; % difference of the actual and target positions when sliding element reach maximum deflection, default = 0.2
 
-threshold = 0.0;  %threshold of the actual and target positions distance where sliding element start to signalize, default = 0.025
+% SEthreshold = 0.0;  %threshold of the actual and target positions distance where sliding element start to signalize, default = 0.025
 
 
     if exist('s','var') == 0
