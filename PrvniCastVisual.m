@@ -111,7 +111,6 @@ count=0;
         
         % Core parameters
         doba(1,no)=0;
-        count=0;
         m = 1;
         n = 1;
         u = 1;
