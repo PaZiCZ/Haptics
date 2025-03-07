@@ -1,5 +1,5 @@
 %Script reads joystick position in X and Y and guides a human to predefined smoothly changing position
-function [done] = DruhaCastVisual(tester,experiment_no,haptic,visual,repetition, testcase, variant, saveFolder)
+function [done] = DruhaCastVisual(tester, experiment_no, haptic, visual, paraleltask, repetition, testcase, variant, saveFolder)
 % clear
 % close all
 
@@ -9,11 +9,12 @@ si = 'Task 2, continuously changing position';
 run('spec.m');
 
 % variables from specification file
-disp(['Tester: ', tester]);
-disp(['Experiment Number: ', experiment_no]);
+disp(['Tester: ', num2str(tester)]);
+disp(['Experiment Number: ', num2str(experiment_no)]);
 disp(['Haptic: ', num2str(haptic)]);
 disp(['Visual: ', num2str(visual)]);
-disp(['Variant: ', variant]);
+disp(['Paralel: ', num2str(paraleltask)]);
+disp(['Variant: ', num2str(variant)]);
 
 % folder="tester"+tester+"no"+experiment_no;
 addpath('E:\Thesis255678\var01-12')
@@ -22,38 +23,8 @@ Test = load("var"+variant+".mat");
 saveFolder = fullfile('E:\Thesis255678\measurement', testcase);
 filename2="te"+tester+"no"+experiment_no+"var"+variant;
 
-% Ensure the folder exists; create it if it doesn't should be created in
-% the run experiment
-% % if isfolder(saveFolder)
-% % 
-% %     disp(['The folder exists from Task 1: ', saveFolder]);
-% % else
-% %     disp(['Folder created: ', saveFolder]);
-% %     mkdir(saveFolder);
-% %     disp('Task 1 is not saved!!!!');
-% % end
-% % 
-% %     fileNameresults = "resultsT2a.csv";
-% % if isfile(fullfile(saveFolder, fileNameresults))
-% %     disp('The file exists in the folder.');
-% % else
 
- %Settings - Arduino - joy
-% if exist('s','var') == 0
-%     s = arduino('COM4','Leonardo');
-% end
 % 
-% if haptic == 1
-%     servo1Pin = 'D6';     % pin number for left servo - 1 
-%     servo2Pin = 'D5';     % pin number for right servo - 2
-%     if exist('s1','var') == 0
-%       s1 = servo(s, servo1Pin);
-%     end
-%     if exist('s2','var') == 0
-%       s2 = servo(s, servo2Pin);
-%     end
-% end
-
 poloha=Test.poloha;
 [radky,h]=size(poloha);
 maxT=poloha(radky,2);
@@ -84,25 +55,47 @@ position(i)= axis(joystick, 2);
 z = position(i) - 0.25;
 w = position(i) + 0.25;   
     disp('Do not push to a sliding element during the experiment!')
-    disp('To begin the experiment move with the joystick forward and back')
+   
   
-% Begin while loop that enables desired pause between subsequent trials
-while (position(i) > z ) && (position(i) < w )&& (count < countmax)
-    position(i) = axis(joystick, 2);
-    count = count + 1;
+% Starting sequence based on paraleltask value
+if paraleltask == 0
+    % Start the experiment based on joystick movement
+    disp('Start the experiment by moving the joystick forward and back.');
+    
+    % Wait for joystick movement (forward or backward)
+    while (position(i) > z ) && (position(i) < w )&& (count < countmax)  % Wait for forward or backward movement
+        position(i) = axis(joystick, 2);
+        count = count + 1;
+    end
+
+elseif paraleltask == 1
+    % Start the experiment based on button 13 press
+    disp('Start the experiment by switch red button to A and back to OFF positions.');
+
+    % Wait for button 13 to be pressed and released
+    buttonPressed = false;
+    while ~buttonPressed
+        buttonState = button(joystick, 13); % Read the state of button 13
+        if buttonState == 1  % Button 13 is pressed
+            buttonPressed = true;
+            disp('Button 13 pressed. Now release it to start the experiment.');
+        end
+    end
+    
+    % Wait for button 13 to be released
+    while buttonState == 1
+        buttonState = button(joystick, 13); % Continuously check if the button is released
+    end
 end
-    
-% Pause
-pause(1);
-    
-% Starting sequence
+
+% Countdown for experiment start
 disp('Start in 3 seconds, get ready!');
 for i = 1:3
     pause(1);
-    fprintf('%1.0f    ',i);
+    fprintf('%1.0f    ', i);
 end
-pause(0.5)
-disp('START!')
+pause(0.5);
+disp('START!');
    
     
 % Trail begins
@@ -210,7 +203,8 @@ EAPDP = permute(errorAPDP, [2 1 3]);
 % Define datasets and corresponding headers
 datasets = {
     'resultsT2a', {'t (s)', 'DP (-)','AP (-)','path (V)'}, [t(:), DP(:), AP(:), path(:) ];
-    'resultsT2b', {'AE2 (V)','DevAE2 (V)', 'MEDP (V)'}, [AE2(:), DevAE2(:), MEDP(:)]
+    'resultsT2b', {'AE2 (V)','DevAE2 (V)', 'MEDP (V)'}, [AE2(:), DevAE2(:), MEDP(:)];
+    'resultsT2c', {'paralel task'}, paraleltask
 };
 
 % Loop through datasets and save each to a CSV file

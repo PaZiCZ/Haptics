@@ -1,6 +1,6 @@
 %Script reads joystick position in X and Y and guides a human to randomly generated position
 
-function [done] = PrvniCastVisual(tester,experiment_no,haptic,visual,repetition, testcase, saveFolder)
+function [done] = PrvniCastVisual(tester, experiment_no, haptic,visual, paraleltask, repetition, testcase, saveFolder)
 
 %script identifier
 % si = 'Task 1 / randomly generated target positions';
@@ -8,10 +8,11 @@ function [done] = PrvniCastVisual(tester,experiment_no,haptic,visual,repetition,
 run('spec.m');
 
 % variables from specification file
-disp(['Tester: ', tester]);
-disp(['Experiment Number: ', experiment_no]);
+disp(['Tester: ', num2str(tester)]);
+disp(['Experiment Number: ', num2str(experiment_no)]);
 disp(['Haptic: ', num2str(haptic)]);
 disp(['Visual: ', num2str(visual)]);
+disp(['Paralel: ', num2str(paraleltask)]);
 
 % folder="tester"+tester+"no"+experiment_no;
 % testcase="te"+tester+"no"+experiment_no; 
@@ -52,32 +53,50 @@ i = 1;
 countmax=1e7;
 count=0;
 
-% Begin while loop for Nr. of trials - to see improvements through practice
-
-    position(i)= axis(joystick, 2);
+position(i)= axis(joystick, 2);
     z = position(i) - 0.25;
     w = position(i) + 0.25;
-    disp('Do not push to a sliding element during the experiment!')
-    disp('To begin the experiment move with the joystick forward and back')
+disp('Do not push to a sliding element during the experiment!')
+
+% Starting sequence based on paraleltask value
+if paraleltask == 0
+    % Start the experiment based on joystick movement
+    disp('Start the experiment by moving the joystick forward and back.');
     
-    % Begin while loop that enables desired pause between subsequent trials
-    while (position(i) > z ) && (position(i) < w )&& (count < countmax)
+    % Wait for joystick movement (forward or backward)
+    while (position(i) > z ) && (position(i) < w )&& (count < countmax)  % Wait for forward or backward movement
         position(i) = axis(joystick, 2);
         count = count + 1;
     end
-    
-    % Pause
-    pause(1);
-    
-    % Starting sequence
-    disp('Start in 3 seconds, get ready!');
-    for i = 1:3
-        pause(1);
-        fprintf('%1.0f    ',i);
+
+elseif paraleltask == 1
+    % Start the experiment based on button 13 press
+    disp('Start the experiment by switch red button to A and back to OFF positions.');
+
+    % Wait for button 13 to be pressed and released
+    buttonPressed = false;
+    while ~buttonPressed
+        buttonState = button(joystick, 13); % Read the state of button 13
+        if buttonState == 1  % Button 13 is pressed
+            buttonPressed = true;
+            disp('Button 13 pressed. Now release it to start the experiment.');
+        end
     end
-    pause(0.5)
-    disp('START!')
-   
+    
+    % Wait for button 13 to be released
+    while buttonState == 1
+        buttonState = button(joystick, 13); % Continuously check if the button is released
+    end
+end
+
+% Countdown for experiment start
+disp('Start in 3 seconds, get ready!');
+for i = 1:3
+    pause(1);
+    fprintf('%1.0f    ', i);
+end
+pause(0.5);
+disp('START!');
     
      % Trail begins
     pause(1);
@@ -274,7 +293,7 @@ datasets = {
     'resultsa', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
     'resultsb', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
     'resultsc', arrayfun(@(j) sprintf('errorAPDP_%d (V)', j), 1:size(errorAPDP, 2), 'UniformOutput', false), errorAPDP;
-    'resultsd', {'DevAE2 (V)'}, DevAE2(:)
+    'resultsd', {'DevAE2 (V)','paralel task'}, [DevAE2(:), paraleltask]
 };
 
 % Loop through datasets and save each to a CSV file

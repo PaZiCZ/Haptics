@@ -10,7 +10,7 @@
 
 % Define tester and experiment_no (participant and session number)
 tester = 7;        % Set the tester number (participant, e.g., 1) (7 for short T2)
-experiment_no = 3; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
+experiment_no = 1; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
 
 testcase="te"+tester+"no"+experiment_no; 
 
@@ -51,20 +51,29 @@ visual2 = row.visual2(1);  % 1 for visual feedback, 0 for no visual (for variant
 haptic3 = row.haptic3(1);  % 1 for haptic feedback, 0 for no haptic (for variant 3)
 visual3 = row.visual3(1);  % 1 for visual feedback, 0 for no visual (for variant 3)
 
+T1paralel1 = row.T1paralel1(1);
+T2paralel1 = row.T2paralel1(1);
+
+T1paralel2 = row.T1paralel2(1);
+T2paralel2 = row.T2paralel2(1);
+
+T1paralel3 = row.T1paralel3(1);
+T2paralel3 = row.T2paralel3(1);
 
 % Call your main experiment function for each variant (replace with your own logic)
 % Example: running the experiment for variant 1, 2, and 3
 haptic = {haptic1, haptic2, haptic3}; 
 visual = {visual1, visual2, visual3};
 variant = {variant1, variant2, variant3};
-
+T1paralel = {T1paralel1, T1paralel2, T1paralel3};
+T2paralel = {T2paralel1, T2paralel2, T2paralel3};
 % Initialize workload matrix with zeros (assuming 3 repetitions)
 workload = zeros(1, length(haptic));
 
 for i = 1:length(haptic)
     
-    PrvniCastVisual(tester, experiment_no, haptic{i}, visual{i}, i, testcase, saveFolder);
-    DruhaCastVisual(tester, experiment_no, haptic{i}, visual{i}, i, testcase, variant{i}, saveFolder);
+    PrvniCastVisual(tester, experiment_no, haptic{i}, visual{i}, T1paralel{i}, i, testcase, saveFolder);
+    DruhaCastVisual(tester, experiment_no, haptic{i}, visual{i}, T2paralel{i}, i, testcase, variant{i}, saveFolder);
         workload(i) = input(sprintf('Please enter a number for workload (Repetition %d): ', i));
 end
 
