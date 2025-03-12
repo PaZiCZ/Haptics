@@ -13,7 +13,7 @@ toleranceX = 0.1; % tolerance to define target position interval (only Task 1)
 % visual = 0;
 
 %Settings - Arduino - joy
-if haptic == 1
+
 
 % Sliding element setting 
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
@@ -22,10 +22,9 @@ neutral = 0.65; %poloha kdyz joystick nepozaduje manevr, default = 0.57
 
 korekce=0.06; %0.027;
 
-max_difX = 0.75; % difference of the actual and target positions when sliding element reach maximum deflection, default = 0.2
 
-% SEthreshold = 0.0;  %threshold of the actual and target positions distance where sliding element start to signalize, default = 0.025
-
+% SEthreshold = 0.025;  %threshold of the actual and target positions distance where sliding element start to signalize, default = 0.025
+if haptic == 1
 
     if exist('s','var') == 0
         s = arduino('COM4','Leonardo');
@@ -41,3 +40,5 @@ max_difX = 0.75; % difference of the actual and target positions when sliding el
     end
 
 end
+
+max_difX = 0.75; % difference of the actual and target positions when sliding element reach maximum deflection, default = 0.2
