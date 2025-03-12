@@ -100,7 +100,7 @@ disp('START!');
     
      % Trail begins
     pause(1);
-
+start_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
     % Declare basic information
     o = 1;
     no = 1;
@@ -241,7 +241,7 @@ disp('START!');
         no = no + 1;
         
     end
-    
+    stop_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
     fprintf('end of trial %g \n', trial)
     fprintf(newline)
     
@@ -293,7 +293,7 @@ datasets = {
     'resultsa', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
     'resultsb', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
     'resultsc', arrayfun(@(j) sprintf('errorAPDP_%d (V)', j), 1:size(errorAPDP, 2), 'UniformOutput', false), errorAPDP;
-    'resultsd', {'DevAE2 (V)','paralel task'}, [DevAE2(:), paraleltask]
+    'resultsd', {'DevAE2 (V)','paralel task', 'start_time', 'stop_time'}, [DevAE2(:), paraleltask, start_time, stop_time]
 };
 
 % Loop through datasets and save each to a CSV file
@@ -329,3 +329,4 @@ disp('Task finished.');
 done =1;
 % end
 end
+pause(5);
