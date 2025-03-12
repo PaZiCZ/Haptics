@@ -89,5 +89,24 @@ writetable(T, csvFileName);
 
 disp(['Workload matrix saved to ', csvFileName]);
 
+% Moving paralel task files from Labview to Matlab test session folder
+sourceFolder = 'C:\Users\simulator\Documents\LabVIEW Data';
+filesToMove = {'Altitude.xlsx', 'Temperature.xlsx'};
+for i = 1:length(filesToMove)
+    sourceFile = fullfile(sourceFolder, filesToMove{i});
+    destinationFile = fullfile(saveFolder, filesToMove{i});
+    
+    % Check if the file exists before moving
+    if exist(sourceFile, 'file')
+        movefile(sourceFile, destinationFile);
+        fprintf('Moved: %s -> %s\n', sourceFile, destinationFile);
+    else
+        fprintf('File not found: %s\n', sourceFile);
+    end
+end
+
+% test of results saving - Jan will add the code
+% savedfilestest.m
+
 % Optionally, save results or generate reports after the experiment
 disp('Experiment completed.');
