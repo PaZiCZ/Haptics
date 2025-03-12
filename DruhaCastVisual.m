@@ -100,6 +100,7 @@ disp('START!');
     
 % Trail begins
 pause(1);
+start_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
 
     % Declare basic information
     o = 1;
@@ -153,7 +154,7 @@ pause(1);
             o = o + 1;
        
     end
-    
+    stop_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
      % Average error and deviation
             n = o - 1;
             normdoba(1:n)=doba(1:n)/sum(doba(1:n));
@@ -204,7 +205,7 @@ EAPDP = permute(errorAPDP, [2 1 3]);
 datasets = {
     'resultsT2a', {'t (s)', 'DP (-)','AP (-)','path (V)'}, [t(:), DP(:), AP(:), path(:) ];
     'resultsT2b', {'AE2 (V)','DevAE2 (V)', 'MEDP (V)'}, [AE2(:), DevAE2(:), MEDP(:)];
-    'resultsT2c', {'paralel task'}, paraleltask
+    'resultsT2c', {'paralel task', 'start_time', 'stop_time'}, [paraleltask, start_time, stop_time]
 };
 
 % Loop through datasets and save each to a CSV file
