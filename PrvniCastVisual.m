@@ -28,7 +28,7 @@ disp(['Paralel: ', num2str(paraleltask)]);
 % end
 
 T0 = 3; %
-done =0;
+% done =0;
 
 % rozsah joysticku - bylo by dobré to ovìøit nìjakou kalibrací
 p1min = -1;
@@ -134,11 +134,11 @@ start_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
         n = 1;
         u = 1;
         i = 1;
-        k = 1;
+        % k = 1;
         RT(no)=0;
 %         LearningTime = 1;
         timing(no) = tic;
-        signal=false;
+        % signal=false;
         zaznam=0;
         count=0;
         countmax=1e7;
@@ -269,7 +269,7 @@ end
 
 ExperimentTiming = toc(ET) ./ 60;
 fprintf('Time need to comlete the experiment: %g min \n', ExperimentTiming)
-AA = sprintf('Experiment time [min]');
+% AA = sprintf('Experiment time [min]');
 
 if haptic == 1
     clear s
@@ -329,4 +329,3 @@ disp('Task finished.');
 done =1;
 % end
 end
-pause(5);
