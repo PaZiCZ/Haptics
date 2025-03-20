@@ -288,6 +288,11 @@ end
 
 EAPDP = permute(errorAPDP, [2 1 3]);
 
+% Fitts law (Jan)
+
+
+
+
 % Define datasets and corresponding headers
 datasets = {
     'resultsa', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
