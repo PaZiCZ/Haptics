@@ -10,7 +10,7 @@
 
 % Define tester and experiment_no (participant and session number)
 tester = 7;        % Set the tester number (participant, e.g., 1) (7 for short T2)
-experiment_no = 1; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
+experiment_no = 2; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
 
 testcase="te"+tester+"no"+experiment_no; 
 
@@ -68,18 +68,23 @@ variant = {variant1, variant2, variant3};
 T1paralel = {T1paralel1, T1paralel2, T1paralel3};
 T2paralel = {T2paralel1, T2paralel2, T2paralel3};
 % Initialize workload matrix with zeros (assuming 3 repetitions)
-workload = zeros(1, length(haptic));
-
+workload1 = zeros(1, length(haptic));
+workload2 = zeros(1, length(haptic));
 for i = 1:length(haptic)
     
     PrvniCastVisual(tester, experiment_no, haptic{i}, visual{i}, T1paralel{i}, i, testcase, saveFolder);
+    workload1(i) = input(sprintf('Please enter a number for workload: '));
     DruhaCastVisual(tester, experiment_no, haptic{i}, visual{i}, T2paralel{i}, i, testcase, variant{i}, saveFolder);
-        workload(i) = input(sprintf('Please enter a number for workload (Repetition %d): ', i));
+    workload2(i) = input(sprintf('Please enter a number for workload: '));
 end
 
 % Create a table with headers
 repetitions = 1:length(haptic); % Column headers (1,2,3,...)
-T = array2table(workload, 'VariableNames', strcat("Repetition_", string(repetitions)));
+
+% Create a matrix by combining workload1 and workload2 as columns
+workloadMatrix = [workload1', workload2']; % Transpose to make each variable a column
+
+T = array2table(workloadMatrix, 'VariableNames', {'Workload1', 'Workload2'}); % Corrected variable names
 
 % Define CSV file name
 csvFileName = fullfile(saveFolder, 'workload.csv');
