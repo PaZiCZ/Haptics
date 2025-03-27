@@ -290,15 +290,42 @@ EAPDP = permute(errorAPDP, [2 1 3]);
 
 % Fitts law (Jan)
 
+% Calculate ID_difficulty for each operation
+ID_difficulty= log2(2*path/toleranceX);
 
+% Generate the new plot: MT (Movement Time) vs ID_difficulty
+figure(2);
+set(gca, 'FontSize', 22);
+scatter(ID_difficulty, RT, 'b', 'filled'); % Points of MT vs ID_difficulty
+hold on;
 
+% Calculate the regression line
+p = polyfit(ID_difficulty, RT, 1); % p(1) is the slope, p(2) is the intercept
+y_fit = polyval(p, ID_difficulty); % Fitted values
+plot(ID_difficulty, y_fit, 'r-', 'LineWidth', 2); % Regression line
+
+% Calculate Root Mean Squared Error (RMSE)
+residuals = RT - y_fit;  
+RMSE = sqrt(mean(residuals.^2));
+
+% Labels and title
+xlabel('ID\_difficulty');
+ylabel('MT (s)');
+title('MT vs ID\_difficulty with Regression Line');
+legend('Data', 'Regression Line', 'Location', 'northwest');
+grid on;
+
+% Save the plot
+File_2 = testcase + "rep" + repetition + "_MT_vs_ID.fig";
+saveas(figure(2), File_2);
+movefile(File_2, saveFolder);
 
 % Define datasets and corresponding headers
 datasets = {
-    'resultsa', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:)];
+    'resultsa', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)', 'ID_difficulty'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:), ID_difficulty(:)];
     'resultsb', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
     'resultsc', arrayfun(@(j) sprintf('errorAPDP_%d (V)', j), 1:size(errorAPDP, 2), 'UniformOutput', false), errorAPDP;
-    'resultsd', {'DevAE2 (V)','paralel task', 'start_time', 'stop_time'}, [DevAE2(:), paraleltask, start_time, stop_time]
+    'resultsd', {'DevAE2 (V)','paralel task', 'start_time', 'stop_time', 'slope', 'accuracy', 'intersection (with MT axis)'}, [DevAE2(:), paraleltask, start_time, stop_time, p(1), RMSE, p(2)]
 };
 
 % Loop through datasets and save each to a CSV file
