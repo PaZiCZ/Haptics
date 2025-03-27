@@ -111,7 +111,25 @@ for i = 1:length(filesToMove)
 end
 
 % test of results saving - Jan will add the code
-% savedfilestest.m
+% To evaluate that the generated tables are correct
+savedfilestest(saveFolder);
 
 % Optionally, save results or generate reports after the experiment
 disp('Experiment completed.');
+
+% Prompt volunteer for comments
+volunteerComment = inputdlg({'Please enter your comments/observations about the experiment:'}, 'Experiment Feedback', [10 50]); 
+
+% Save comments to a text file with timestamp
+if ~isempty(volunteerComment)
+    commentFilename = fullfile(saveFolder, ['ExperimentComments_', char(datetime('now','Format','yyyyMMdd_HHmmss')), '.txt']);
+    fid = fopen(commentFilename, 'w');
+    fprintf(fid, 'Experiment: %s\n', testcase);
+    fprintf(fid, 'Repetition: %d\n', repetition);
+    fprintf(fid, 'Date: %s\n\n', char(datetime('now','Format','dd-MMM-yyyy HH:mm:ss')));
+    fprintf(fid, 'VOLUNTEER COMMENTS:\n%s', volunteerComment{1});
+    fclose(fid);
+    
+    disp('Volunteer comments saved successfully.');
+end
+
