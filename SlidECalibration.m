@@ -19,13 +19,13 @@ end
 
 %Settings
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
-vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.65; %poloha kdyz joystick nepozaduje manevr, default = 0.57
+vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.35
+neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.65
 % max_delta = 0.2; %maximalni diferencialni vychylka pro naklon joysticku na stranu, default = 0.1
 
 max_difX = 1; %maximalni rozdil cilove a aktualni polohy, nad timto rozdilem uz je lista vzdy na limitu, default = 0.2
 
-korekce=0.06; %0.027;
+korekce=0.06; %0.06;
 
 %POZOR - vnitrni_limit, vnejsi_limit, neutral, max_delta, min_ext, min_tilt
 %jsou bezrozmerove polohy serv-a

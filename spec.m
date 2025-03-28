@@ -18,7 +18,7 @@ toleranceX = 0.1; % tolerance to define target position interval (only Task 1)
 % Sliding element setting 
 vnitrni_limit = 0.8; %aby moc nezajelo, vysunuty 0, zasunuty 1, default = 0.8
 vnejsi_limit = 0.35; %aby nevyjelo a nevypadlo, default = 0.3
-neutral = 0.65; %poloha kdyz joystick nepozaduje manevr, default = 0.57
+neutral = 0.63; %poloha kdyz joystick nepozaduje manevr, default = 0.57
 
 korekce=0.06; %0.027;
 

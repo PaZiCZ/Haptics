@@ -245,6 +245,9 @@ start_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
     fprintf('end of trial %g \n', trial)
     fprintf(newline)
     
+    % Get screen size
+    screenSize = get(0, 'ScreenSize');
+
     % Create a plot of comparison between desired and actual position
     figure(1);
     set(gca,'FontSize',22);
@@ -260,7 +263,17 @@ start_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
     saveas(figure(1), File_1);
     movefile(File_1,saveFolder) 
     hold off;
-    
+    originalPosition = get(gcf, 'Position');  % [x, y, width, height]
+
+    % Define the new x-position (keeping the original height and width)
+    newX = 0;  % Set the desired x-position on the left side
+    newY = (screenSize(4) - originalPosition(4)) / 2;  % Center vertically on the screen
+
+    % Set the new position while preserving the original size
+    newPosition = [newX, newY, originalPosition(3), originalPosition(4)];
+
+    % Apply the new position to figure(2)
+    set(gcf, 'Position', newPosition);
     
 if haptic == 1       
         writePosition(s1, neutral+korekce);
@@ -296,6 +309,7 @@ ID_difficulty= log2(2*path/toleranceX);
 % Generate the new plot: MT (Movement Time) vs ID_difficulty
 figure(2);
 set(gca, 'FontSize', 22);
+set(gcf, 'Position', newPosition);
 scatter(ID_difficulty, RT, 'b', 'filled'); % Points of MT vs ID_difficulty
 hold on;
 
@@ -325,7 +339,7 @@ datasets = {
     'resultsa', {'DPTs (s)', 'path (V)', 'RTs (s)', 'AE2 (V)', 'MEDP (V)', 'ID_difficulty'}, [DPT(:), path(:), RT(:), AE2(:), MEDP(:), ID_difficulty(:)];
     'resultsb', {'time (s)', 'AP (-)'}, [xt(:), kniplValue(:)];
     'resultsc', arrayfun(@(j) sprintf('errorAPDP_%d (V)', j), 1:size(errorAPDP, 2), 'UniformOutput', false), errorAPDP;
-    'resultsd', {'DevAE2 (V)','paralel task', 'start_time', 'stop_time', 'slope', 'accuracy', 'intersection (with MT axis)'}, [DevAE2(:), paraleltask, start_time, stop_time, p(1), RMSE, p(2)]
+    'resultsd', {'DevAE2 (V)','paralel task', 'start_time', 'stop_time', 'slope', 'accuracy', 'intersection (with MT axis)'}, [DevAE2(:), paraleltask, start_time, stop_time, p(1), mean(RMSE,'omitnan') , p(2)]
 };
 
 % Loop through datasets and save each to a CSV file

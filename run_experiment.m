@@ -10,8 +10,8 @@
 
 % Define tester and experiment_no (participant and session number)
 % % Update the session in the excel Participants_list.xlsx
-tester = 1;        % Set the tester number (participant, e.g., 1) (7 for short T2)
-experiment_no = 1; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
+tester = 77;        % Set the tester number (participant, e.g., 1) (77 for short T2)
+experiment_no = 1; % Set the experiment number (session number, e.g., 2) (77-1 only haptics, 7-2 only visual, 7-3 both)
 
 testcase="te"+tester+"no"+experiment_no; 
 
@@ -111,12 +111,12 @@ for i = 1:length(filesToMove)
     end
 end
 
+% Optionally, save results or generate reports after the experiment
+disp('Experiment completed.');
+
 % test of results saving - Jan will add the code
 % To evaluate that the generated tables are correct
 savedfilestest(saveFolder);
-
-% Optionally, save results or generate reports after the experiment
-disp('Experiment completed.');
 
 % Prompt volunteer for comments
 volunteerComment = inputdlg({'Please enter your comments/observations about the experiment:'}, 'Experiment Feedback', [10 50]); 
@@ -126,7 +126,7 @@ if ~isempty(volunteerComment)
     commentFilename = fullfile(saveFolder, ['ExperimentComments_', char(datetime('now','Format','yyyyMMdd_HHmmss')), '.txt']);
     fid = fopen(commentFilename, 'w');
     fprintf(fid, 'Experiment: %s\n', testcase);
-    fprintf(fid, 'Repetition: %d\n', repetition);
+    % fprintf(fid, 'Repetition: %d\n', repetition);
     fprintf(fid, 'Date: %s\n\n', char(datetime('now','Format','dd-MMM-yyyy HH:mm:ss')));
     fprintf(fid, 'VOLUNTEER COMMENTS:\n%s', volunteerComment{1});
     fclose(fid);

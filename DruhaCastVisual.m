@@ -166,8 +166,10 @@ start_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
     % Maximum error between AP and DP
     MEDP = max(abs(errorAPDP));
     % Maximum overdraft
-    
-    
+    % Get screen size
+    screenSize = get(0, 'ScreenSize');
+
+       
     % Create a plot of comparison between desired and actual position
     figure(1);
     set(gca,'FontSize',22);
@@ -183,6 +185,17 @@ start_time = string(datetime('now', 'Format', 'dd.MM.yyyy HH:mm:ss'));
     saveas(figure(1), File_1);
     movefile(File_1,saveFolder) 
     hold off;
+    originalPosition = get(gcf, 'Position');  % [x, y, width, height]
+
+    % Define the new x-position (keeping the original height and width)
+    newX = 0;  % Set the desired x-position on the left side
+    newY = (screenSize(4) - originalPosition(4)) / 2;  % Center vertically on the screen
+
+    % Set the new position while preserving the original size
+    newPosition = [newX, newY, originalPosition(3), originalPosition(4)];
+
+    % Apply the new position to figure(2)
+    set(gcf, 'Position', newPosition);
     %close all;
     
     if haptic == 1

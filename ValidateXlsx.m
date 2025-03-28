@@ -4,6 +4,10 @@ function ValidateXlsx(files)
     % Input:
     % saveFolder: Path to the folder where the Excel and CSV files are saved.
     
+% Check, that the folder contain Temperature.xlsx and Altitude.xlsx
+% Check, that mentioned files did not remain here C:\Users\simulator\Documents\LabVIEW Data
+
+
     % Initialize a flag to detect errors
     hasErrors = false;
     
