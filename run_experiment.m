@@ -9,8 +9,9 @@
 
 
 % Define tester and experiment_no (participant and session number)
-tester = 7;        % Set the tester number (participant, e.g., 1) (7 for short T2)
-experiment_no = 2; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
+% % Update the session in the excel Participants_list.xlsx
+tester = 1;        % Set the tester number (participant, e.g., 1) (7 for short T2)
+experiment_no = 1; % Set the experiment number (session number, e.g., 2) (7-1 only haptics, 7-2 only visual, 7-3 both)
 
 testcase="te"+tester+"no"+experiment_no; 
 

@@ -5,7 +5,7 @@
 % experiment_no = '08'; 
 % variant = '11';
 
-Maxno = 5;    % Number of target position in Task 1 
+Maxno = 20;    % Number of target position in Task 1 
 toleranceX = 0.1; % tolerance to define target position interval (only Task 1)
 
 % haptic and visual flags
