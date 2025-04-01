@@ -328,6 +328,7 @@ ylabel('MT (s)');
 title('MT vs ID\_difficulty with Regression Line');
 legend('Data', 'Regression Line', 'Location', 'northwest');
 grid on;
+hold off;
 
 % Save the plot
 File_2 = testcase + "rep" + repetition + "_MT_vs_ID.fig";
