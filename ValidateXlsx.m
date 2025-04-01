@@ -78,7 +78,7 @@ function hasErrors = validateXlsxCells(data, file)
 end
 
 function checkLabVIEWDataFolder()
-    labviewFolder = "C:\\Users\\simulator\\Documents\\LabVIEW Data";
+    labviewFolder = "C:\Users\simulator\Documents\LabVIEW Data";
     filesToCheck = {"Temperature.xlsx", "Altitude.xlsx"};
     
     for i = 1:length(filesToCheck)

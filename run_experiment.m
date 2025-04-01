@@ -11,7 +11,7 @@
 % Define tester and experiment_no (participant and session number)
 % % Update the session in the excel Participants_list.xlsx
 tester = 77;        % Set the tester number (participant, e.g., 1) (77 for short T2)
-experiment_no = 1; % Set the experiment number (session number, e.g., 2) (77-1 only haptics, 7-2 only visual, 7-3 both)
+experiment_no = 2; % Set the experiment number (session number, e.g., 2) (77-1 only haptics, 7-2 only visual, 7-3 both)
 
 testcase="te"+tester+"no"+experiment_no; 
 
@@ -23,7 +23,9 @@ if ~isfolder(saveFolder)
     disp(['Created folder: ', saveFolder]);
 else
     disp(['Folder already exists: ', saveFolder]);
-    disp('DO NOT CONTINUE');
+    disp('DO NOT CONTINUE, you are overwriting saved data!');
+    disp("Make sure the folder of measurement is unique E:\Thesis255678\measurement")
+    disp("Please press Ctrl+C")
 end
 
 % Load experiment settings from a table (assumes the table is named 'settings_table.csv')

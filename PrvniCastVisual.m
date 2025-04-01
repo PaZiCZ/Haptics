@@ -310,7 +310,6 @@ ID_difficulty= log2(2*path/toleranceX);
 include=~isnan(RT);
 p = polyfit(ID_difficulty(include), RT(include), 1); % p(1) is the slope, p(2) is the intercept
 y_fit = polyval(p, ID_difficulty(include)); % Fitted values
-plot(ID_difficulty(include), y_fit, 'r-', 'LineWidth', 2); % Regression line
 
 % Calculate Root Mean Squared Error (RMSE)
 residuals = RT(include).' - y_fit;  
@@ -322,6 +321,7 @@ set(gca, 'FontSize', 22);
 set(gcf, 'Position', newPosition);
 scatter(ID_difficulty, RT, 'b', 'filled'); % Points of MT vs ID_difficulty
 hold on;
+plot(ID_difficulty(include), y_fit, 'r-', 'LineWidth', 2); % Regression line
 
 % Labels and title
 xlabel('ID\_difficulty');
