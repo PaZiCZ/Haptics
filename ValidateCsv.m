@@ -1,8 +1,5 @@
 function ValidateCsv(files)
-    % This function evaluates all Excel and CSV files generated during the experiment to ensure there are no errors in the data.
-    
-    % Input:
-    % saveFolder: Path to the folder where the Excel and CSV files are saved.
+    % This function evaluates all CSV files generated during the experiment to ensure there are no errors in the data.
     
     % Initialize a flag to detect errors
     hasErrors = false;

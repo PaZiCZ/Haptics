@@ -1,12 +1,22 @@
 function ValidateXlsx(files)
-    % This function evaluates all Excel and CSV files generated during the experiment to ensure there are no errors in the data.
+    % This function checks that Temperature and Altitude files exist.
+    % It also checks if Temperature and Altitude files exist in LabVIEW Data folder
+    % And it also evaluates all Excel files generated during the experiment to ensure there are no errors in the data.
     
-    % Input:
-    % saveFolder: Path to the folder where the Excel and CSV files are saved.
+    % Required files
+    requiredFiles = {"Temperature.xlsx", "Altitude.xlsx"};
+    existingFiles = {files.name};
     
-% Check, that the folder contain Temperature.xlsx and Altitude.xlsx
-% Check, that mentioned files did not remain here C:\Users\simulator\Documents\LabVIEW Data
+    % Check if required files exist
+    for i = 1:length(requiredFiles)
+        if ~any(strcmp(requiredFiles{i}, existingFiles))
+            disp(['Error: Missing required file: ', requiredFiles{i}]);
+            return;
+        end
+    end
 
+    % Check if Temperature and Altitude files exist in LabVIEW Data folder
+    checkLabVIEWDataFolder();
 
     % Initialize a flag to detect errors
     hasErrors = false;
@@ -63,6 +73,18 @@ function hasErrors = validateXlsxCells(data, file)
                     return;
                 end
             end
+        end
+    end
+end
+
+function checkLabVIEWDataFolder()
+    labviewFolder = "C:\\Users\\simulator\\Documents\\LabVIEW Data";
+    filesToCheck = {"Temperature.xlsx", "Altitude.xlsx"};
+    
+    for i = 1:length(filesToCheck)
+        filePath = fullfile(labviewFolder, filesToCheck{i});
+        if exist(filePath, 'file')
+            disp(['Warning: ', filesToCheck{i}, ' is still in ', labviewFolder, '. Please delete it.']);
         end
     end
 end
