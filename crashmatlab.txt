@@ -1,0 +1,175 @@
+MATLAB Log File: C:\Users\SIMULA~1\AppData\Local\Temp\matlab_crash_dump.4032-1
+
+------------------------------------------------
+MATLAB Log File
+------------------------------------------------ 
+
+
+--------------------------------------------------------------------------------
+             Access violation detected at 2025-04-16 12:50:17 +0200
+--------------------------------------------------------------------------------
+
+Configuration:
+  Crash Decoding           : Disabled - No sandbox or build area path
+  Crash Mode               : continue (default)
+  Default Encoding         : UTF-8
+  Deployed                 : false
+  Graphics Driver          : NVIDIA Corporation NVIDIA GeForce RTX 4070 Ti/PCIe/SSE2 Version 4.6.0 NVIDIA 566.14
+  Graphics card 1          : NVIDIA ( 0x10de ) NVIDIA GeForce RTX 4070 Ti Version 32.0.15.6614 (2024-11-6)
+  Java Version             : Java 1.8.0_202-b08 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode
+  MATLAB Architecture      : win64
+  MATLAB Entitlement ID    : 6804623
+  MATLAB Root              : C:\Program Files\MATLAB\R2024b
+  MATLAB Version           : 24.2.0.2740171 (R2024b) Update 1
+  OpenGL                   : hardware
+  Operating System         : Microsoft Windows 10 Education
+  Process ID               : 4032
+  Processor ID             : x86 Family 6 Model 158 Stepping 10, GenuineIntel
+  Session Key              : b0b93412-bd5e-4a52-b5d4-cd49abc96b2e
+  Window System            : Version 10.0 (Build 19045)
+
+Fault Count: 1
+
+
+Abnormal termination:
+Access violation
+
+Current Thread: 'MCR 0 interpreter thread' id 1348
+
+Register State (from fault):
+  RAX = 0000000000000000  RBX = 000001a47c176cc0
+  RCX = 000001a47c176cc0  RDX = 000001a47c176cc0
+  RSP = 00000090d83f54f0  RBP = 000001a4045241e0
+  RSI = 000001a47c176cc0  RDI = 00000090d83f5550
+ 
+   R8 = 000001a42c3f8730   R9 = 000001a4045241e0
+  R10 = 000001a424e42760  R11 = 000001a4282cde70
+  R12 = 000000000000000f  R13 = 0000000000000020
+  R14 = 000001a42c3f8730  R15 = 0000000000000000
+ 
+  RIP = 00007ffa0ba4c48b  EFL = 00010287
+ 
+   CS = 0033   FS = 0053   GS = 002b
+
+Stack Trace (from fault):
+[  0] 0x00007ffa0ba4c48b C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+00836747 MathWorks::lxe::MultiValue::end+00017339
+[  1] 0x00007ffa0b9abbeb C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+00179179 MathWorks::lxe::IIndexingContext::HasSubsasgnForParenWithAssignedLHS+00000075
+[  2] 0x00007ffa0bb411d0 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+01839568 MathWorks::lxe::paren_delete_shared_xvalue_ptr_opaque_or_oops+00001456
+[  3] 0x00007ffa0bb3eb0b C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+01829643 MathWorks::lxe::paren_delete_pointer_mcos+00000219
+[  4] 0x00007ffa0c44e7e8 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05498856 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00225192
+[  5] 0x00007ffa0c4750a9 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05656745 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00383081
+[  6] 0x00007ffa0c31a567 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04236647 MathWorks::lxe::GetTag+00007623
+[  7] 0x00007ffa0c30345f C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04142175 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00046735
+[  8] 0x00007ffa0c3079e5 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04159973 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00064533
+[  9] 0x00007ffa109d9806 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+01480710 FeatureTestObservableWorkspace+00212358
+[ 10] 0x00007ffa108cf13e C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00389438 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00317838
+[ 11] 0x00007ffa108cedbc C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00388540 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00316940
+[ 12] 0x00007ffa108d19d2 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00399826 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00328226
+[ 13] 0x00007ffa11512a48 C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01190472 Mfh_file::dispatch_file_common+00000152
+[ 14] 0x00007ffa1151156a C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01185130 Mfh_error::lookup+00011498
+[ 15] 0x00007ffa1151295d C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01190237 Mfh_file::dispatch+00000045
+[ 16] 0x00007ff9fbacb9d2 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+04438482 knownSubclasses+00011634
+[ 17] 0x00007ff9fbaa0517 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+04261143 mwboost::archive::detail::oserializer<mwboost::archive::text_oarchive,MathWorks::MatlabComponents::ComponentIdentifier>::save_object_data+00380327
+[ 18] 0x00007ff9fb8d44db C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+02376923 mcos::impl::terminateFcn+00107467
+[ 19] 0x00007ff9d31fdc92 C:\Program Files\MATLAB\R2024b\bin\win64\hgutils.dll+00580754 graphics::theme::GraphicsTheme::singleColorThemeOverride+00013410
+[ 20] 0x00007ff9fb8d4880 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+02377856 mcos::impl::terminateFcn+00108400
+[ 21] 0x00007ff9fbad3aab C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+04471467 namedArgsToCell+00011947
+[ 22] 0x00007ff9fbaf39e2 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+04602338 createScalarDefaultPropValue+00065986
+[ 23] 0x00007ffa139d8b86  C:\Program Files\MATLAB\R2024b\bin\win64\mcos.dll+00166790 omDirectSetProperty+00000070
+[ 24] 0x00007ffa0ba36101 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+00745729 MathWorks::lxe::MatrixModuleImplementation::SubscriptedDelete+00038289
+[ 25] 0x00007ffa0bacd30a C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+01364746 MathWorks::lxe::set_ldot_pointer_for_builtin_subsasgn+00008426
+[ 26] 0x00007ffa0bad6b06 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+01403654 MathWorks::lxe::AssignDotGuaranteeIdXlistMcosMx+00000182
+[ 27] 0x00007ffa0bace17d C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+01368445 MathWorks::lxe::set_ldot_pointer_for_builtin_subsasgn+00012125
+[ 28] 0x00007ffa0bad8718 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxeindexing.dll+01410840 MathWorks::lxe::assign_dot_pointer_mcos+00000104
+[ 29] 0x00007ffa0c44e835 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05498933 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00225269
+[ 30] 0x00007ffa0c46fd31 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05635377 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00361713
+[ 31] 0x00007ffa0c31a567 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04236647 MathWorks::lxe::GetTag+00007623
+[ 32] 0x00007ffa0c30345f C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04142175 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00046735
+[ 33] 0x00007ffa0c3079e5 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04159973 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00064533
+[ 34] 0x00007ffa109d9806 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+01480710 FeatureTestObservableWorkspace+00212358
+[ 35] 0x00007ffa108cf13e C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00389438 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00317838
+[ 36] 0x00007ffa108cedbc C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00388540 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00316940
+[ 37] 0x00007ffa108d19d2 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00399826 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00328226
+[ 38] 0x00007ffa11512a48 C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01190472 Mfh_file::dispatch_file_common+00000152
+[ 39] 0x00007ffa1151156a C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01185130 Mfh_error::lookup+00011498
+[ 40] 0x00007ffa1151295d C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01190237 Mfh_file::dispatch+00000045
+[ 41] 0x00007ff9fbacb9d2 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+04438482 knownSubclasses+00011634
+[ 42] 0x00007ff9fbaa0517 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+04261143 mwboost::archive::detail::oserializer<mwboost::archive::text_oarchive,MathWorks::MatlabComponents::ComponentIdentifier>::save_object_data+00380327
+[ 43] 0x00007ff9fb8d43d7 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+02376663 mcos::impl::terminateFcn+00107207
+[ 44] 0x00007ff9fb8d48a8 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+02377896 mcos::impl::terminateFcn+00108440
+[ 45] 0x00007ff9fb9ce00a C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+03399690 objectDisplayHelper+00102426
+[ 46] 0x00007ff9fb9cd0f7 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+03395831 objectDisplayHelper+00098567
+[ 47] 0x00007ff9fbbf1a97 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+05642903 mustBeA+00386919
+[ 48] 0x00007ff9fbbf0516 C:\Program Files\MATLAB\R2024b\bin\win64\mcos_impl.dll+05637398 mustBeA+00381414
+[ 49] 0x00007ffa113fd329 C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+00054057
+[ 50] 0x00007ffa1141e7bd C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+00190397 Mfh_MATLAB_fn_impl::dispatch+00000045
+[ 51] 0x00007ffa108d752d C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00423213 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00351613
+[ 52] 0x00007ffa108e638e C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00484238 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00412638
+[ 53] 0x00007ffa0c520fe6 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+06361062 MathWorks::lxe::ReadOnlyXvaluePtr::operator=+00006966
+[ 54] 0x00007ffa0c522675 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+06366837 MathWorks::lxe::ReadOnlyXvaluePtr::operator=+00012741
+[ 55] 0x00007ffa0c522a6a C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+06367850 MathWorks::lxe::ReadOnlyXvaluePtr::operator=+00013754
+[ 56] 0x00007ffa0c44e7e8 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05498856 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00225192
+[ 57] 0x00007ffa0c46da39 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05626425 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00352761
+[ 58] 0x00007ffa0c205f76 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03104630 MathWorks::lxe::LXEConstants::IsIfElse+00547062
+[ 59] 0x00007ffa0c20a162 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03121506 MathWorks::lxe::LXEConstants::IsY+00012018
+[ 60] 0x00007ffa0c207983 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03111299 MathWorks::lxe::LXEConstants::IsY+00001811
+[ 61] 0x00007ffa0c20b265 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03125861 MathWorks::lxe::LXEConstants::IsY+00016373
+[ 62] 0x00007ffa0c20b513 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03126547 MathWorks::lxe::LXEConstants::IsY+00017059
+[ 63] 0x00007ffa0c20ae7e C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03124862 MathWorks::lxe::LXEConstants::IsY+00015374
+[ 64] 0x00007ffa0c2070c6 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03109062 MathWorks::lxe::LxeTypes::GetTypeXvalueOf+00000262
+[ 65] 0x00007ffa0c303e67 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04144743 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00049303
+[ 66] 0x00007ffa0c3079e5 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04159973 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00064533
+[ 67] 0x00007ffa109d9806 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+01480710 FeatureTestObservableWorkspace+00212358
+[ 68] 0x00007ffa108cf773 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00391027 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00319427
+[ 69] 0x00007ffa108cedc3 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00388547 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00316947
+[ 70] 0x00007ffa108d19d2 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00399826 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00328226
+[ 71] 0x00007ffa11512a48 C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01190472 Mfh_file::dispatch_file_common+00000152
+[ 72] 0x00007ffa11511909 C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01186057 Mfh_error::lookup+00012425
+[ 73] 0x00007ffa1151299d C:\Program Files\MATLAB\R2024b\bin\win64\m_dispatcher.dll+01190301 Mfh_file::dispatch+00000045
+[ 74] 0x00007ffa108d752d C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00423213 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00351613
+[ 75] 0x00007ffa108e638e C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00484238 coretypes::array::Array<MathWorks::String::detail::StringArrayVariant,MathWorks::String::detail::StringArrayPolicy,coretypes::array::ArrayTypeList<MathWorks::String::detail::StringArrayVariant> >::resize+00412638
+[ 76] 0x00007ffa0c520fe6 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+06361062 MathWorks::lxe::ReadOnlyXvaluePtr::operator=+00006966
+[ 77] 0x00007ffa0c522675 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+06366837 MathWorks::lxe::ReadOnlyXvaluePtr::operator=+00012741
+[ 78] 0x00007ffa0c44e7e8 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05498856 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00225192
+[ 79] 0x00007ffa0c46d7b9 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+05625785 MathWorks::lxe::XvalueFactory::XvalueDeleter::XvalueDeleter+00352121
+[ 80] 0x00007ffa0c205f76 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03104630 MathWorks::lxe::LXEConstants::IsIfElse+00547062
+[ 81] 0x00007ffa0c20a162 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03121506 MathWorks::lxe::LXEConstants::IsY+00012018
+[ 82] 0x00007ffa0c207983 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03111299 MathWorks::lxe::LXEConstants::IsY+00001811
+[ 83] 0x00007ffa0c20b265 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03125861 MathWorks::lxe::LXEConstants::IsY+00016373
+[ 84] 0x00007ffa0c20b513 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03126547 MathWorks::lxe::LXEConstants::IsY+00017059
+[ 85] 0x00007ffa0c20ae7e C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03124862 MathWorks::lxe::LXEConstants::IsY+00015374
+[ 86] 0x00007ffa0c2070c6 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+03109062 MathWorks::lxe::LxeTypes::GetTypeXvalueOf+00000262
+[ 87] 0x00007ffa0c303e67 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04144743 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00049303
+[ 88] 0x00007ffa0c3079e5 C:\Program Files\MATLAB\R2024b\bin\win64\m_lxe.dll+04159973 MathWorks::lxe::SetEngineImplUnlinkFlagForAllCallsOnStack+00064533
+[ 89] 0x00007ffa109d9806 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+01480710 FeatureTestObservableWorkspace+00212358
+[ 90] 0x00007ffa1091b0e6 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00700646 mwboost::archive::detail::pointer_oserializer<mwboost::archive::xml_oarchive,MathWorks::lxe::PreLineExecutionEvent>::save_object_ptr+00074918
+[ 91] 0x00007ffa1091cbe4 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+00707556 mwboost::archive::detail::pointer_oserializer<mwboost::archive::xml_oarchive,MathWorks::lxe::PreLineExecutionEvent>::save_object_ptr+00081828
+[ 92] 0x00007ffa1099cb67 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+01231719 mwboost::archive::detail::oserializer<mwboost::archive::text_oarchive,MathWorks::MatlabComponents::ComponentIdentifier>::save_object_data+00327655
+[ 93] 0x00007ffa1099e967 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+01239399 mwboost::archive::detail::oserializer<mwboost::archive::text_oarchive,MathWorks::MatlabComponents::ComponentIdentifier>::save_object_data+00335335
+[ 94] 0x00007ffa1099dc50 C:\Program Files\MATLAB\R2024b\bin\win64\libmwlxemainservices.dll+01236048 mwboost::archive::detail::oserializer<mwboost::archive::text_oarchive,MathWorks::MatlabComponents::ComponentIdentifier>::save_object_data+00331984
+[ 95] 0x00007ffa116c9ca9 C:\Program Files\MATLAB\R2024b\bin\win64\libmwbridge.dll+00302249 mnGetPrompt+00013993
+[ 96] 0x00007ffa1192b676   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00505462 iqm::Iqm::instance+00002358
+[ 97] 0x00007ffa11984ed2   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00872146 iqm::UserEvalPlugin::execute+00001314
+[ 98] 0x00007ffa1195229f   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00664223 iqm::Iqm::setupIqmFcnPtrs+00110911
+[ 99] 0x00007ffa1195e32d   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00713517 iqm::Iqm::setupIqmFcnPtrs+00160205
+[100] 0x00007ffa1191ea0f   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00453135 iqm::Iqm::create+00010543
+[101] 0x00007ffa11699546 C:\Program Files\MATLAB\R2024b\bin\win64\libmwbridge.dll+00103750 ioReadLine+00000406
+[102] 0x00007ffa11699375 C:\Program Files\MATLAB\R2024b\bin\win64\libmwbridge.dll+00103285 ioReadLine+00000165
+[103] 0x00007ffa116ca070 C:\Program Files\MATLAB\R2024b\bin\win64\libmwbridge.dll+00303216 mnGetCommandLineBuffer+00000288
+[104] 0x00007ffa116ca517 C:\Program Files\MATLAB\R2024b\bin\win64\libmwbridge.dll+00304407 mnParser+00000487
+[105] 0x00007ffa1179d19f   C:\Program Files\MATLAB\R2024b\bin\win64\mcr.dll+00446879 mcr_initialize_main+00016975
+[106] 0x00007ffa117491de   C:\Program Files\MATLAB\R2024b\bin\win64\mcr.dll+00102878 mcrFunctionSignature::set_signature+00080062
+[107] 0x00007ffa117663c2   C:\Program Files\MATLAB\R2024b\bin\win64\mcr.dll+00222146 mwboost::archive::codecvt_null<wchar_t>::`default constructor closure'+00017266
+[108] 0x00007ffa1197fe2a   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00851498 iqm::PackagedTaskPlugin::execute+00000074
+[109] 0x00007ffa1195229f   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00664223 iqm::Iqm::setupIqmFcnPtrs+00110911
+[110] 0x00007ffa1191f32a   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00455466 iqm::Iqm::create+00012874
+[111] 0x00007ffa1191f811   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00456721 iqm::Iqm::create+00014129
+[112] 0x00007ffa1191ec9d   C:\Program Files\MATLAB\R2024b\bin\win64\iqm.dll+00453789 iqm::Iqm::create+00011197
+[113] 0x00007ffa11781b7c   C:\Program Files\MATLAB\R2024b\bin\win64\mcr.dll+00334716 mcrInstantiationError::operator=+00010652
+[114] 0x00007ffa1178263f   C:\Program Files\MATLAB\R2024b\bin\win64\mcr.dll+00337471 mcrInstantiationError::operator=+00013407
+[115] 0x00007ffa1177fc41   C:\Program Files\MATLAB\R2024b\bin\win64\mcr.dll+00326721 mcrInstantiationError::operator=+00002657
+[116] 0x00007ffa65cb8fba C:\Program Files\MATLAB\R2024b\bin\win64\mwboost_thread-vc143-mt-x64-1_81.dll+00036794 mwboost::detail::win32::handle_manager::swap+00000650
+[117] 0x00007ffa90641bb2                   C:\WINDOWS\System32\ucrtbase.dll+00138162 configthreadlocale+00000146
+[118] 0x00007ffa92197374                   C:\WINDOWS\System32\KERNEL32.DLL+00095092 BaseThreadInitThunk+00000020
+[119] 0x00007ffa928dcc91                      C:\WINDOWS\SYSTEM32\ntdll.dll+00314513 RtlUserThreadStart+00000033
+
